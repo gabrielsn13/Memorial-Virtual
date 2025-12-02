@@ -31,7 +31,7 @@
         </div>
       </div>
       
-      <div class="year-selector-scroll">
+      <div class="year-selector-wrapper">
         <!-- Search Icon Button (fixo à esquerda) -->
         <div 
           class="search-icon-button"
@@ -40,13 +40,15 @@
           <ion-icon name="search-outline"></ion-icon>
         </div>
         
-        <div 
-          *ngFor="let year of availableYears" 
-          class="year-item"
-          [class.active]="selectedYear === year"
-          [attr.data-year]="year"
-          (click)="selectYear(year)">
-          {{ year }}
+        <div class="year-selector-scroll">
+          <div 
+            *ngFor="let year of availableYears" 
+            class="year-item"
+            [class.active]="selectedYear === year"
+            [attr.data-year]="year"
+            (click)="selectYear(year)">
+            {{ year }}
+          </div>
         </div>
       </div>
     </div>
