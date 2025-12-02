@@ -1,17 +1,182 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="onboarding-content">
+  <div class="slides-wrapper">
+    
+    <!-- Slide 1: Tela inicial com título e botão participar -->
+    <div class="slide slide-1" [class.active]="currentSlide === 0">
+      <div class="slide-container">
+        <h1 class="app-title">
+          Aft<ion-icon name="bulb-outline" class="stylized-e-icon"></ion-icon>r
+        </h1>
+        <ion-button 
+          class="participate-btn gradient-btn" 
+          (click)="goToSlide(1)"
+          expand="block">
+          participar
+        </ion-button>
+      </div>
+    </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Slide 2: Formulário de cadastro -->
+    <div class="slide slide-2" [class.active]="currentSlide === 1">
+      <div class="slide-container">
+        <div class="logo-container">
+          <div class="logo-circle">
+            <img src="assets/images/afteer.png" alt="Afteer Logo" class="logo-image">
+          </div>
+        </div>
+        
+        <form class="registration-form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Nome</label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="formData.nome" 
+              name="nome"
+              placeholder="Digite seu nome"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <div class="form-group">
+            <label>E-mail</label>
+            <ion-input 
+              type="email" 
+              [(ngModel)]="formData.email" 
+              name="email"
+              placeholder="Digite seu e-mail"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <div class="form-group">
+            <label>Phone</label>
+            <ion-input 
+              type="tel" 
+              [(ngModel)]="formData.phone" 
+              name="phone"
+              placeholder="Digite seu telefone"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <ion-button 
+            type="submit"
+            class="participate-btn gradient-btn" 
+            expand="block">
+            participar
+          </ion-button>
+        </form>
+      </div>
+    </div>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <!-- Slide 3: Tela com ilustração de pessoa com laptop -->
+    <div class="slide slide-3" [class.active]="currentSlide === 2">
+      <div class="slide-container">
+        <h1 class="app-title">
+          Aft<ion-icon name="bulb-outline" class="stylized-e-icon"></ion-icon>r
+        </h1>
+        <ion-button 
+          class="participate-btn subtle-btn" 
+          (click)="goToSlide(3)"
+          expand="block">
+          participar
+        </ion-button>
+        
+        <div class="illustration-container">
+          <div class="illustration illustration-laptop">
+            <svg viewBox="0 0 200 200" class="illustration-svg">
+              <!-- Pessoa com laptop -->
+              <circle cx="100" cy="80" r="25" fill="none" stroke="#4A90E2" stroke-width="2"/>
+              <path d="M 75 105 Q 75 120 85 120 L 115 120 Q 125 120 125 105 L 125 140 L 75 140 Z" fill="none" stroke="#4A90E2" stroke-width="2"/>
+              <rect x="60" y="140" width="80" height="30" rx="3" fill="none" stroke="#E8B4D1" stroke-width="2"/>
+              <rect x="70" y="145" width="60" height="20" rx="2" fill="#E8B4D1" opacity="0.3"/>
+              <path d="M 50 140 Q 50 150 60 150" fill="none" stroke="#E8B4D1" stroke-width="2"/>
+              <path d="M 150 140 Q 150 150 140 150" fill="none" stroke="#E8B4D1" stroke-width="2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 4: Formulário com ilustração de pessoa com gráfico -->
+    <div class="slide slide-4" [class.active]="currentSlide === 3">
+      <div class="slide-container">
+        <div class="logo-container">
+          <div class="logo-circle">
+            <img src="assets/images/afteer.png" alt="Afteer Logo" class="logo-image">
+          </div>
+        </div>
+        
+        <form class="registration-form" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label>Nome</label>
+            <ion-input 
+              type="text" 
+              [(ngModel)]="formData.nome" 
+              name="nome"
+              placeholder="Digite seu nome"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <div class="form-group">
+            <label>E-mail</label>
+            <ion-input 
+              type="email" 
+              [(ngModel)]="formData.email" 
+              name="email"
+              placeholder="Digite seu e-mail"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <div class="form-group">
+            <label>Phone</label>
+            <ion-input 
+              type="tel" 
+              [(ngModel)]="formData.phone" 
+              name="phone"
+              placeholder="Digite seu telefone"
+              class="custom-input">
+            </ion-input>
+          </div>
+          
+          <ion-button 
+            type="submit"
+            class="participate-btn gradient-btn" 
+            expand="block">
+            participar
+          </ion-button>
+        </form>
+        
+        <div class="illustration-container">
+          <div class="illustration illustration-chart">
+            <svg viewBox="0 0 200 200" class="illustration-svg">
+              <!-- Pessoa com gráfico -->
+              <circle cx="100" cy="60" r="20" fill="none" stroke="#4A90E2" stroke-width="2"/>
+              <path d="M 80 85 Q 80 95 90 95 L 110 95 Q 120 95 120 85 L 120 120 L 80 120 Z" fill="none" stroke="#4A90E2" stroke-width="2"/>
+              <!-- Gráfico de pizza -->
+              <circle cx="100" cy="150" r="30" fill="none" stroke="#4A90E2" stroke-width="2"/>
+              <path d="M 100 120 L 100 150 L 130 150 A 30 30 0 0 1 100 120" fill="#4A90E2" opacity="0.3"/>
+              <path d="M 100 150 L 70 150 A 30 30 0 0 1 100 120" fill="#E8B4D1" opacity="0.3"/>
+              <path d="M 100 150 L 100 180 A 30 30 0 0 1 70 150" fill="#4A90E2" opacity="0.2"/>
+              <!-- Estrela -->
+              <path d="M 100 100 L 102 108 L 110 108 L 104 113 L 106 121 L 100 116 L 94 121 L 96 113 L 90 108 L 98 108 Z" fill="#FFD700" opacity="0.6"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <!-- Indicadores de slide -->
+  <div class="slide-indicators">
+    <span 
+      *ngFor="let slide of slides; let i = index" 
+      class="indicator" 
+      [class.active]="currentSlide === i"
+      (click)="goToSlide(i)">
+    </span>
+  </div>
 </ion-content>
