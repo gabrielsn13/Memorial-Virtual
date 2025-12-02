@@ -6,12 +6,16 @@ import { ProfilePage } from './profile.page';
 
 import { ProfilePageRoutingModule } from './profile-routing.module';
 
+// PrimeNG
+import { DatePicker } from 'primeng/datepicker';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
-    ProfilePageRoutingModule
+    ProfilePageRoutingModule,
+    DatePicker
   ],
   declarations: [ProfilePage]
 })

@@ -13,8 +13,8 @@ export class ProfilePage implements OnInit {
   
   userProfile = {
     name: 'Your Name',
-    birthDate: '',
-    deathDate: '',
+    birthDate: null as Date | null,
+    deathDate: null as Date | null,
     biography: '',
     message: 'Always In Our Thoughts, Forever In Our Hearts',
     relationship: 'In memory, family and friends.'
@@ -22,6 +22,7 @@ export class ProfilePage implements OnInit {
 
   mementos: any[] = [];
   selectedFiles: File[] = [];
+  maxDate: Date = new Date();
 
   constructor() {}
 

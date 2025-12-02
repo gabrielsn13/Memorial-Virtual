@@ -71,23 +71,31 @@
           <h2 class="profile-title">{{ userProfile.name }}</h2>
           
           <div class="dates-section">
-            <ion-item class="date-input-item">
-              <ion-label position="stacked">Birth Date</ion-label>
-              <ion-input 
-                [(ngModel)]="userProfile.birthDate" 
-                type="date"
-                placeholder="Select birth date">
-              </ion-input>
-            </ion-item>
+            <div class="date-input-item">
+              <label class="date-label">Birth Date</label>
+              <p-datepicker 
+                [(ngModel)]="userProfile.birthDate"
+                [showIcon]="true"
+                dateFormat="dd.mm.yy"
+                placeholder="Select birth date"
+                [maxDate]="maxDate"
+                styleClass="afteer-datepicker"
+                inputStyleClass="afteer-datepicker-input">
+              </p-datepicker>
+            </div>
             
-            <ion-item class="date-input-item">
-              <ion-label position="stacked">Death Date</ion-label>
-              <ion-input 
-                [(ngModel)]="userProfile.deathDate" 
-                type="date"
-                placeholder="Select death date">
-              </ion-input>
-            </ion-item>
+            <div class="date-input-item">
+              <label class="date-label">Death Date</label>
+              <p-datepicker 
+                [(ngModel)]="userProfile.deathDate"
+                [showIcon]="true"
+                dateFormat="dd.mm.yy"
+                placeholder="Select death date"
+                [maxDate]="maxDate"
+                styleClass="afteer-datepicker"
+                inputStyleClass="afteer-datepicker-input">
+              </p-datepicker>
+            </div>
           </div>
 
           <p class="memory-text">{{ userProfile.message }}</p>
