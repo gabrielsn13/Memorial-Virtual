@@ -1,0 +1,89 @@
+<ion-content [fullscreen]="true" class="login-content">
+  <div class="login-container">
+    
+    <!-- Header com logo e ajuda -->
+    <div class="login-header">
+      <div class="logo-section">
+        <img src="assets/images/afteer.png" alt="Afteer Logo" class="app-logo">
+        <span class="app-name">Afteer</span>
+      </div>
+      <a href="#" class="help-link">
+        <ion-icon name="help-circle-outline"></ion-icon>
+        <span class="help-text">Feedback and help</span>
+      </a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="login-main">
+      <h1 class="login-title">Log in to Afteer</h1>
+      <p class="login-subtitle">Manage your account, check notifications, comment on videos, and more.</p>
+
+      <!-- Botões de login -->
+      <div class="login-buttons">
+        <ion-button 
+          class="login-btn qr-btn" 
+          (click)="onLoginMethod('qr')"
+          expand="block">
+          <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+          Use QR code
+        </ion-button>
+
+        <ion-button 
+          class="login-btn phone-btn" 
+          (click)="onLoginMethod('phone')"
+          expand="block">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          Use phone / email / username
+        </ion-button>
+
+        <ion-button 
+          class="login-btn facebook-btn" 
+          (click)="onLoginMethod('facebook')"
+          expand="block">
+          <ion-icon name="logo-facebook" slot="start"></ion-icon>
+          Continue with Facebook
+        </ion-button>
+
+        <ion-button 
+          class="login-btn google-btn" 
+          (click)="onLoginMethod('google')"
+          expand="block">
+          <ion-icon name="logo-google" slot="start"></ion-icon>
+          Continue with Google
+        </ion-button>
+
+        <ion-button 
+          class="login-btn apple-btn" 
+          (click)="onLoginMethod('apple')"
+          expand="block">
+          <ion-icon name="logo-apple" slot="start"></ion-icon>
+          Continue with Apple
+        </ion-button>
+      </div>
+
+      <!-- Texto legal -->
+      <p class="legal-text">
+        By continuing with an account located in <a href="#">Brazil</a>, you agree to our 
+        <a href="#">Terms of Service</a> and acknowledge that you have read our 
+        <a href="#">Privacy Policy</a>.
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="login-footer">
+      <div class="footer-left">
+        <span>Don't have an account?</span>
+        <a href="#" class="signup-link">Sign up</a>
+      </div>
+      <div class="footer-right">
+        <ion-button class="language-btn" fill="outline">
+          English (US)
+          <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+        </ion-button>
+        <p class="copyright">© 2025 Afteer</p>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+

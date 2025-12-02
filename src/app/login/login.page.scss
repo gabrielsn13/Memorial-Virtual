@@ -1,0 +1,282 @@
+.login-content {
+  --background: #000000;
+  --color: #FFFFFF;
+  position: relative;
+  overflow-y: auto;
+}
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: #000000;
+  color: #FFFFFF;
+}
+
+// Header
+.login-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  position: relative;
+  z-index: 10;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.app-name {
+  font-size: 24px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.help-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #FFFFFF;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  ion-icon {
+    font-size: 18px;
+  }
+
+  .help-text {
+    @media (max-width: 360px) {
+      display: none;
+    }
+  }
+}
+
+// Main content
+.login-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 24px;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 32px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 12px 0;
+  line-height: 1.2;
+}
+
+.login-subtitle {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+// Botões de login
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.login-btn {
+  --background: #161823;
+  --color: #FFFFFF;
+  --border-radius: 4px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  height: 48px;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: none;
+  margin: 0;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    --background: #1f2128;
+  }
+
+  ion-icon {
+    font-size: 20px;
+    margin-right: 12px;
+  }
+}
+
+.qr-btn {
+  ion-icon {
+    color: #FFFFFF;
+  }
+}
+
+.phone-btn {
+  ion-icon {
+    color: #FFFFFF;
+  }
+}
+
+.facebook-btn {
+  --background: #1877F2;
+  
+  &:hover {
+    --background: #166FE5;
+  }
+
+  ion-icon {
+    color: #FFFFFF;
+  }
+}
+
+.google-btn {
+  --background: #161823;
+  
+  ion-icon {
+    color: #4285F4;
+  }
+}
+
+.apple-btn {
+  --background: #161823;
+  
+  ion-icon {
+    color: #FFFFFF;
+  }
+}
+
+// Texto legal
+.legal-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.5;
+  text-align: center;
+  margin: 0;
+
+  a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: underline;
+    }
+  }
+}
+
+// Footer
+.login-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+
+  .signup-link {
+    color: #E91E63;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: #F06292;
+      text-decoration: underline;
+    }
+  }
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.language-btn {
+  --color: #FFFFFF;
+  --border-color: rgba(255, 255, 255, 0.2);
+  --border-width: 1px;
+  --border-style: solid;
+  --border-radius: 4px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  height: 36px;
+  font-size: 14px;
+  text-transform: none;
+  margin: 0;
+
+  ion-icon {
+    font-size: 16px;
+  }
+}
+
+.copyright {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+// Responsividade
+@media (max-width: 480px) {
+  .login-main {
+    padding: 32px 20px;
+  }
+
+  .login-title {
+    font-size: 28px;
+  }
+
+  .login-subtitle {
+    font-size: 14px;
+  }
+
+  .login-footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footer-right {
+    align-items: flex-start;
+    width: 100%;
+  }
+}
+
