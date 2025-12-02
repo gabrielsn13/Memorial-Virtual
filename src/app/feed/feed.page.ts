@@ -9,6 +9,8 @@ interface MemorialProfile {
   imageUrl: string;
   message: string;
   relationship: string;
+  isPublicFigure?: boolean;
+  isHistoricalFigure?: boolean;
 }
 
 @Component({
@@ -18,7 +20,7 @@ interface MemorialProfile {
   standalone: false,
 })
 export class FeedPage implements OnInit {
-  profiles: MemorialProfile[] = [
+  allProfiles: MemorialProfile[] = [
     {
       id: 1,
       name: 'Margaret Evans',
@@ -63,13 +65,93 @@ export class FeedPage implements OnInit {
       imageUrl: 'https://via.placeholder.com/200/F0E68C/FFFFFF?text=AW',
       message: 'A beautiful soul who brought joy to all',
       relationship: 'In memory, loved ones.'
+    },
+    {
+      id: 6,
+      name: 'David Thompson',
+      birthDate: '12.03.1975',
+      deathDate: '15.01.2025',
+      imageUrl: 'https://via.placeholder.com/200/A8E6CF/FFFFFF?text=DT',
+      message: 'A loving father and devoted friend',
+      relationship: 'In memory, wife, children, and family.'
+    },
+    {
+      id: 7,
+      name: 'Sarah Martinez',
+      birthDate: '08.07.1980',
+      deathDate: '22.04.2025',
+      imageUrl: 'https://via.placeholder.com/200/FFD3A5/FFFFFF?text=SM',
+      message: 'Her smile lit up every room she entered',
+      relationship: 'In memory, husband, children, and friends.'
+    },
+    {
+      id: 8,
+      name: 'James Wilson',
+      birthDate: '30.11.1968',
+      deathDate: '10.08.2025',
+      imageUrl: 'https://via.placeholder.com/200/C7CEEA/FFFFFF?text=JW',
+      message: 'A man of integrity, wisdom, and kindness',
+      relationship: 'In memory, family and community.'
+    },
+    {
+      id: 9,
+      name: 'Napoleon Bonaparte',
+      birthDate: '15.08.1769',
+      deathDate: '05.05.1821',
+      imageUrl: 'https://via.placeholder.com/200/8B7355/FFFFFF?text=NB',
+      message: 'Emperor of the French, military genius, and one of history\'s most influential figures',
+      relationship: 'In memory, a figure who shaped European history.',
+      isPublicFigure: true,
+      isHistoricalFigure: true
     }
   ];
+
+  profiles: MemorialProfile[] = [];
+  availableYears: number[] = [];
+  selectedYear: number = 0;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // Aqui você pode carregar os perfis de uma API
+    // Extrair anos únicos das datas de morte
+    this.extractAvailableYears();
+    // Selecionar o ano mais recente por padrão
+    if (this.availableYears.length > 0) {
+      this.selectedYear = this.availableYears[0];
+      this.filterProfilesByYear(this.selectedYear);
+    }
+  }
+
+  extractAvailableYears() {
+    const yearsSet = new Set<number>();
+    this.allProfiles.forEach(profile => {
+      // Extrair ano da data de morte (formato: DD.MM.YYYY)
+      const year = parseInt(profile.deathDate.split('.')[2]);
+      if (!isNaN(year)) {
+        yearsSet.add(year);
+      }
+    });
+    
+    // Adicionar todos os anos de 2025 até 1821 para permitir scroll completo
+    const currentYear = new Date().getFullYear();
+    const startYear = 1821;
+    for (let year = currentYear; year >= startYear; year--) {
+      yearsSet.add(year);
+    }
+    
+    this.availableYears = Array.from(yearsSet).sort((a, b) => b - a); // Ordenar do mais recente para o mais antigo
+  }
+
+  filterProfilesByYear(year: number) {
+    this.selectedYear = year;
+    this.profiles = this.allProfiles.filter(profile => {
+      const profileYear = parseInt(profile.deathDate.split('.')[2]);
+      return profileYear === year;
+    });
+  }
+
+  selectYear(year: number) {
+    this.filterProfilesByYear(year);
   }
 
   openProfile(profileId: number) {

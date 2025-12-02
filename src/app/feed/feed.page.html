@@ -1,6 +1,25 @@
 <ion-content [fullscreen]="true" class="feed-content">
   <div class="feed-container">
+    <!-- Year Selector Scroll -->
+    <div class="year-selector-container">
+      <div class="year-selector-scroll">
+        <div 
+          *ngFor="let year of availableYears" 
+          class="year-item"
+          [class.active]="selectedYear === year"
+          (click)="selectYear(year)">
+          {{ year }}
+        </div>
+      </div>
+    </div>
+
     <div class="profiles-list">
+      <div 
+        *ngIf="profiles.length === 0" 
+        class="no-profiles-message">
+        <p>No profiles found for {{ selectedYear }}</p>
+      </div>
+      
       <div 
         *ngFor="let profile of profiles" 
         class="profile-card"
@@ -12,7 +31,13 @@
         </div>
 
         <!-- Name -->
-        <h2 class="profile-name">{{ profile.name }}</h2>
+        <div class="profile-name-container">
+          <h2 class="profile-name">{{ profile.name }}</h2>
+          <div class="public-figure-badge" *ngIf="profile.isPublicFigure || profile.isHistoricalFigure">
+            <ion-icon name="star" class="badge-icon"></ion-icon>
+            <span class="badge-text">Historical Figure</span>
+          </div>
+        </div>
 
         <!-- Dates -->
         <div class="dates-container">
