@@ -1,0 +1,232 @@
+<ion-content [fullscreen]="true" class="profile-content">
+  <div class="profile-container">
+    
+    <!-- Header -->
+    <div class="profile-header">
+      <div class="header-nav">
+        <div class="logo-section">
+          <img src="assets/images/afteer.png" alt="Afteer Logo" class="header-logo">
+          <span class="header-app-name">Afteer</span>
+        </div>
+        <div class="header-actions">
+          <ion-button fill="clear" class="header-btn">
+            <ion-icon name="create-outline" slot="start"></ion-icon>
+            <span>Edit</span>
+          </ion-button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Banner Section -->
+    <div class="banner-section">
+      <div class="banner-image">
+        <div class="profile-image-banner">
+          <img src="https://via.placeholder.com/150/FFB6C1/FFFFFF?text=You" alt="Profile" class="banner-profile-img">
+        </div>
+        <div class="banner-content">
+          <h1 class="banner-name">{{ userProfile.name }}</h1>
+          <div class="social-icons">
+            <ion-icon name="mail-outline"></ion-icon>
+            <ion-icon name="logo-facebook"></ion-icon>
+            <ion-icon name="logo-twitter"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="profile-tabs">
+      <div 
+        class="tab-item"
+        [class.active]="activeTab === 'profile'"
+        (click)="selectTab('profile')">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>Profile</span>
+      </div>
+      <div 
+        class="tab-item"
+        [class.active]="activeTab === 'mementos'"
+        (click)="selectTab('mementos')">
+        <ion-icon name="images-outline"></ion-icon>
+        <span>Mementos</span>
+      </div>
+      <div 
+        class="tab-item"
+        [class.active]="activeTab === 'keeper'"
+        (click)="selectTab('keeper')">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>Keeper</span>
+      </div>
+      <div 
+        class="tab-item"
+        [class.active]="activeTab === 'family'"
+        (click)="selectTab('family')">
+        <ion-icon name="home-outline"></ion-icon>
+        <span>Family</span>
+      </div>
+      <div 
+        class="tab-item"
+        [class.active]="activeTab === 'events'"
+        (click)="selectTab('events')">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <span>Events</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="profile-main">
+      <div class="content-wrapper">
+        
+        <!-- Profile Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'profile'">
+          <div class="decorative-element">
+            <ion-icon name="flower-outline" class="flower-icon"></ion-icon>
+          </div>
+          
+          <h2 class="profile-title">{{ userProfile.name }}</h2>
+          
+          <div class="dates-section">
+            <ion-item class="date-input-item">
+              <ion-label position="stacked">Birth Date</ion-label>
+              <ion-input 
+                [(ngModel)]="userProfile.birthDate" 
+                type="date"
+                placeholder="Select birth date">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item class="date-input-item">
+              <ion-label position="stacked">Death Date</ion-label>
+              <ion-input 
+                [(ngModel)]="userProfile.deathDate" 
+                type="date"
+                placeholder="Select death date">
+              </ion-input>
+            </ion-item>
+          </div>
+
+          <p class="memory-text">{{ userProfile.message }}</p>
+
+          <div class="biography-section">
+            <h3 class="section-title">Biography</h3>
+            <ion-textarea 
+              [(ngModel)]="userProfile.biography"
+              rows="10"
+              placeholder="Write the biography here..."
+              class="biography-textarea">
+            </ion-textarea>
+          </div>
+
+          <ion-button 
+            class="save-button"
+            (click)="saveProfile()"
+            expand="block">
+            Save Changes
+          </ion-button>
+        </div>
+
+        <!-- Mementos Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'mementos'">
+          <h3 class="section-title">Mementos</h3>
+          
+          <div class="upload-section">
+            <input 
+              #fileInput
+              type="file" 
+              multiple 
+              accept="image/*,video/*"
+              (change)="onFileSelected($event)"
+              style="display: none;">
+            <ion-button 
+              class="upload-button"
+              (click)="triggerFileInput()"
+              expand="block">
+              <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
+              Upload Photos & Videos
+            </ion-button>
+          </div>
+
+          <div class="mementos-grid">
+            <div 
+              *ngFor="let memento of mementos" 
+              class="memento-item"
+              [class.video-item]="memento.type === 'video'">
+              <img 
+                *ngIf="memento.type === 'image'"
+                [src]="memento.url" 
+                alt="Memento"
+                class="memento-image">
+              <div 
+                *ngIf="memento.type === 'video'"
+                class="video-preview">
+                <img [src]="memento.url" alt="Video" class="memento-image">
+                <ion-icon name="play-circle" class="play-overlay"></ion-icon>
+              </div>
+              <button 
+                class="remove-memento"
+                (click)="removeMemento(memento.id)">
+                <ion-icon name="close-circle"></ion-icon>
+              </button>
+            </div>
+            
+            <!-- Placeholder for more items -->
+            <div class="memento-item placeholder" *ngIf="mementos.length < 9">
+              <span>+{{ 9 - mementos.length }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Keeper Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'keeper'">
+          <h3 class="section-title">Keeper Settings</h3>
+          <p class="info-text">Manage who can view and edit your memorial.</p>
+          <!-- Implementar configurações de privacidade -->
+        </div>
+
+        <!-- Family Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'family'">
+          <h3 class="section-title">Family</h3>
+          <p class="info-text">Manage family members and relationships.</p>
+          <!-- Implementar gerenciamento de família -->
+        </div>
+
+        <!-- Events Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'events'">
+          <h3 class="section-title">Events</h3>
+          <p class="info-text">Create and manage memorial events.</p>
+          <!-- Implementar gerenciamento de eventos -->
+        </div>
+
+      </div>
+
+      <!-- Sidebar -->
+      <div class="profile-sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Mementos</h3>
+          <div class="sidebar-mementos">
+            <div 
+              *ngFor="let memento of mementos.slice(0, 9)" 
+              class="sidebar-memento">
+              <img 
+                *ngIf="memento.type === 'image'"
+                [src]="memento.url" 
+                alt="Memento"
+                class="sidebar-memento-img">
+              <div 
+                *ngIf="memento.type === 'video'"
+                class="sidebar-memento-video">
+                <img [src]="memento.url" alt="Video" class="sidebar-memento-img">
+                <ion-icon name="play" class="sidebar-play-icon"></ion-icon>
+              </div>
+            </div>
+            <div class="sidebar-memento placeholder" *ngIf="mementos.length < 9">
+              <span>+{{ 9 - mementos.length }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+

@@ -211,14 +211,17 @@ export class FeedPage implements OnInit {
     console.log('Navigate to create');
   }
 
-  navigateToInbox() {
-    // Implementar navegação para inbox
-    console.log('Navigate to inbox');
+  navigateToProfile() {
+    this.router.navigate(['/profile']);
   }
 
-  navigateToProfile() {
-    // Implementar navegação para perfil
-    console.log('Navigate to profile');
+  logout() {
+    // Limpar dados de autenticação/sessão do usuário
+    // Aqui você implementaria a lógica de logout (limpar tokens, storage, etc.)
+    console.log('Logging out user...');
+    
+    // Redirecionar para a tela home
+    this.router.navigate(['/']);
   }
 }
 
