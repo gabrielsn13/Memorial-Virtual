@@ -1,0 +1,130 @@
+<ion-content [fullscreen]="true" class="signup-content">
+  <div class="signup-container">
+    
+    <!-- Header com logo e ajuda -->
+    <div class="signup-header">
+      <div class="logo-section">
+        <img src="assets/images/afteer.png" alt="Afteer Logo" class="app-logo">
+        <span class="app-name">Afteer</span>
+      </div>
+      <a href="#" class="help-link">
+        <ion-icon name="help-circle-outline"></ion-icon>
+        <span class="help-text">Feedback and help</span>
+      </a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="signup-main">
+      <h1 class="signup-title">Sign up</h1>
+
+      <!-- Seção de Aniversário -->
+      <div class="form-section">
+        <h2 class="section-title">When's your birthday?</h2>
+        <div class="birthday-inputs">
+          <ion-select 
+            [(ngModel)]="birthday.month" 
+            placeholder="Month"
+            class="birthday-select">
+            <ion-select-option *ngFor="let month of months" [value]="month">
+              {{ month }}
+            </ion-select-option>
+          </ion-select>
+
+          <ion-select 
+            [(ngModel)]="birthday.day" 
+            placeholder="Day"
+            class="birthday-select">
+            <ion-select-option *ngFor="let day of days" [value]="day">
+              {{ day }}
+            </ion-select-option>
+          </ion-select>
+
+          <ion-select 
+            [(ngModel)]="birthday.year" 
+            placeholder="Year"
+            class="birthday-select">
+            <ion-select-option *ngFor="let year of years" [value]="year">
+              {{ year }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+        <p class="info-text">Your birthday won't be shown publicly.</p>
+      </div>
+
+      <!-- Seção de Telefone -->
+      <div class="form-section">
+        <div class="section-header">
+          <h2 class="section-title">Phone</h2>
+          <a href="#" class="email-link" (click)="signUpWithEmail(); $event.preventDefault()">
+            Sign up with email
+          </a>
+        </div>
+
+        <div class="phone-input-group">
+          <ion-select 
+            [(ngModel)]="phone.countryCode" 
+            class="country-select">
+            <ion-select-option value="BR +55">BR +55</ion-select-option>
+            <ion-select-option value="US +1">US +1</ion-select-option>
+            <ion-select-option value="PT +351">PT +351</ion-select-option>
+          </ion-select>
+
+          <ion-input 
+            [(ngModel)]="phone.number" 
+            type="tel"
+            placeholder="Phone number"
+            class="phone-input">
+          </ion-input>
+        </div>
+
+        <!-- Campo de código de verificação -->
+        <div class="code-input-group" *ngIf="showCodeInput">
+          <ion-input 
+            [(ngModel)]="verificationCode" 
+            type="text"
+            placeholder="Enter 6-digit code"
+            maxlength="6"
+            class="code-input">
+          </ion-input>
+          <ion-button 
+            class="send-code-btn" 
+            (click)="sendCode()"
+            fill="outline">
+            Send code
+          </ion-button>
+        </div>
+      </div>
+
+      <!-- Botão Next -->
+      <ion-button 
+        class="next-btn" 
+        (click)="next()"
+        [disabled]="!isFormValid()"
+        expand="block">
+        Next
+      </ion-button>
+
+      <!-- Link Go back -->
+      <a href="#" class="go-back-link" (click)="goBack(); $event.preventDefault()">
+        < Go back
+      </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="signup-footer">
+      <div class="footer-left">
+        <span>Already have an account?</span>
+        <a href="#" class="login-link" (click)="goBack(); $event.preventDefault()">Log in</a>
+      </div>
+      <div class="footer-right">
+        <ion-button class="language-btn" fill="outline">
+          English (US)
+          <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+        </ion-button>
+        <p class="copyright">© 2025 Afteer</p>
+      </div>
+    </div>
+
+  </div>
+</ion-content>
+

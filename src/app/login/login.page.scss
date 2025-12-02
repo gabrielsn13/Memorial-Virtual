@@ -234,12 +234,18 @@
   color: rgba(25, 118, 210, 0.7);
 
   .signup-link {
-    color: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
+    background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     text-decoration: none;
     font-weight: 500;
 
     &:hover {
-      color: linear-gradient(135deg, #d8b0df 0%, #2196F3 100%);
+      background: linear-gradient(135deg, #8E24AA 0%, #1976D2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       text-decoration: underline;
     }
   }
