@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true" class="feed-content">
+  <div class="feed-container">
+    <div class="feed-header">
+      <img src="assets/images/afteer.png" alt="Afteer Logo" class="feed-logo">
+      <span class="feed-app-name">Afteer</span>
+    </div>
+
+    <div class="profiles-list">
+      <div 
+        *ngFor="let profile of profiles" 
+        class="profile-card">
+        
+        <!-- Profile Image -->
+        <div class="profile-image-container">
+          <img [src]="profile.imageUrl" [alt]="profile.name" class="profile-image">
+        </div>
+
+        <!-- Name -->
+        <h2 class="profile-name">{{ profile.name }}</h2>
+
+        <!-- Dates -->
+        <div class="dates-container">
+          <div class="date-box">
+            <span class="date-icon">*</span>
+            <span class="date-text">{{ profile.birthDate }}</span>
+          </div>
+          <div class="date-box">
+            <span class="date-icon">+</span>
+            <span class="date-text">{{ profile.deathDate }}</span>
+          </div>
+        </div>
+
+        <!-- Message Box -->
+        <div class="message-box">
+          <p class="message-text">{{ profile.message }}</p>
+          <p class="relationship-text">{{ profile.relationship }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>
+

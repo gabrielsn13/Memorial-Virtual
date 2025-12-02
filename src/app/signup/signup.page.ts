@@ -53,7 +53,9 @@ export class SignupPage {
     if (this.showCodeInput && this.verificationCode) {
       // Validar código e prosseguir
       console.log('Verification code:', this.verificationCode);
-      // Aqui você navegaria para a próxima etapa ou finalizaria o cadastro
+      // Aqui você validaria o código com o backend
+      // Por enquanto, redireciona direto para o feed
+      this.router.navigate(['/feed']);
     } else if (this.birthday.month && this.birthday.day && this.birthday.year && this.phone.number) {
       this.sendCode();
     }
