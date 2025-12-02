@@ -1,6 +1,6 @@
 .login-content {
-  --background: #000000;
-  --color: #FFFFFF;
+  --background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
+  --color: #333333;
   position: relative;
   overflow-y: auto;
 }
@@ -10,8 +10,24 @@
   display: flex;
   flex-direction: column;
   padding: 0;
-  background: #000000;
-  color: #FFFFFF;
+  background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
+  color: #333333;
+  position: relative;
+  
+  // Efeito de highlight suave no centro-topo (similar à imagem)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 600px;
+    height: 60%;
+    background: radial-gradient(ellipse at center top, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 40%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
 }
 
 // Header
@@ -22,6 +38,7 @@
   padding: 20px 24px;
   position: relative;
   z-index: 10;
+  background: transparent;
 }
 
 .logo-section {
@@ -50,7 +67,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #FFFFFF;
+  color: #1976D2;
   text-decoration: none;
   font-size: 14px;
   opacity: 0.8;
@@ -81,19 +98,21 @@
   max-width: 400px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+  z-index: 1;
 }
 
 .login-title {
   font-size: 32px;
   font-weight: 700;
-  color: #FFFFFF;
+  color: #1976D2;
   margin: 0 0 12px 0;
   line-height: 1.2;
 }
 
 .login-subtitle {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(25, 118, 210, 0.7);
   margin: 0 0 32px 0;
   line-height: 1.5;
 }
@@ -107,8 +126,8 @@
 }
 
 .login-btn {
-  --background: #161823;
-  --color: #FFFFFF;
+  --background: #FFFFFF;
+  --color: #333333;
   --border-radius: 4px;
   --padding-top: 14px;
   --padding-bottom: 14px;
@@ -121,9 +140,10 @@
   margin: 0;
   border-radius: 4px;
   transition: background-color 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    --background: #1f2128;
+    --background: #F5F5F5;
   }
 
   ion-icon {
@@ -134,13 +154,13 @@
 
 .qr-btn {
   ion-icon {
-    color: #FFFFFF;
+    color: #1976D2;
   }
 }
 
 .phone-btn {
   ion-icon {
-    color: #FFFFFF;
+    color: #1976D2;
   }
 }
 
@@ -157,7 +177,7 @@
 }
 
 .google-btn {
-  --background: #161823;
+  --background: #FFFFFF;
   
   ion-icon {
     color: #4285F4;
@@ -165,28 +185,28 @@
 }
 
 .apple-btn {
-  --background: #161823;
+  --background: #FFFFFF;
   
   ion-icon {
-    color: #FFFFFF;
+    color: #333333;
   }
 }
 
 // Texto legal
 .legal-text {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(25, 118, 210, 0.6);
   line-height: 1.5;
   text-align: center;
   margin: 0;
 
   a {
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(25, 118, 210, 0.8);
     text-decoration: none;
     font-weight: 500;
 
     &:hover {
-      color: rgba(255, 255, 255, 0.9);
+      color: #1976D2;
       text-decoration: underline;
     }
   }
@@ -198,9 +218,12 @@
   justify-content: space-between;
   align-items: flex-start;
   padding: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(25, 118, 210, 0.2);
   flex-wrap: wrap;
   gap: 16px;
+  position: relative;
+  z-index: 1;
+  background: transparent;
 }
 
 .footer-left {
@@ -208,15 +231,15 @@
   align-items: center;
   gap: 8px;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(25, 118, 210, 0.7);
 
   .signup-link {
-    color: #E91E63;
+    color: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
     text-decoration: none;
     font-weight: 500;
 
     &:hover {
-      color: #F06292;
+      color: linear-gradient(135deg, #d8b0df 0%, #2196F3 100%);
       text-decoration: underline;
     }
   }
@@ -230,8 +253,8 @@
 }
 
 .language-btn {
-  --color: #FFFFFF;
-  --border-color: rgba(255, 255, 255, 0.2);
+  --color: #1976D2;
+  --border-color: rgba(25, 118, 210, 0.3);
   --border-width: 1px;
   --border-style: solid;
   --border-radius: 4px;
@@ -243,6 +266,7 @@
   font-size: 14px;
   text-transform: none;
   margin: 0;
+  --background: rgba(255, 255, 255, 0.6);
 
   ion-icon {
     font-size: 16px;
@@ -251,7 +275,7 @@
 
 .copyright {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(25, 118, 210, 0.6);
   margin: 0;
 }
 
