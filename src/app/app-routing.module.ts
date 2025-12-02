@@ -21,10 +21,6 @@ const routes: Routes = [
   {
     path: 'biography',
     loadChildren: () => import('./biography/biography.module').then(m => m.BiographyPageModule)
-  },
-  {
-    path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   }
 ];
 @NgModule({

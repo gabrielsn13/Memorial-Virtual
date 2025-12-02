@@ -75,5 +75,29 @@ export class FeedPage implements OnInit {
   openProfile(profileId: number) {
     this.router.navigate(['/biography', profileId]);
   }
+
+  navigateToFeed() {
+    // Já está no feed
+  }
+
+  navigateToFriends() {
+    // Implementar navegação para amigos
+    console.log('Navigate to friends');
+  }
+
+  navigateToCreate() {
+    // Implementar navegação para criar novo memorial
+    console.log('Navigate to create');
+  }
+
+  navigateToInbox() {
+    // Implementar navegação para inbox
+    console.log('Navigate to inbox');
+  }
+
+  navigateToProfile() {
+    // Implementar navegação para perfil
+    console.log('Navigate to profile');
+  }
 }
 

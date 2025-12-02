@@ -1,10 +1,5 @@
 <ion-content [fullscreen]="true" class="feed-content">
   <div class="feed-container">
-    <div class="feed-header">
-      <img src="assets/images/afteer.png" alt="Afteer Logo" class="feed-logo">
-      <span class="feed-app-name">Afteer</span>
-    </div>
-
     <div class="profiles-list">
       <div 
         *ngFor="let profile of profiles" 
@@ -38,6 +33,31 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Bar -->
+  <div class="bottom-nav-bar">
+    <div class="nav-item active" (click)="navigateToFeed()">
+      <ion-icon name="home"></ion-icon>
+      <span class="nav-label">Home</span>
+    </div>
+    <div class="nav-item" (click)="navigateToFriends()">
+      <ion-icon name="people"></ion-icon>
+      <span class="nav-label">Family</span>
+    </div>
+    <div class="nav-item nav-item-center" (click)="navigateToCreate()">
+      <div class="center-button">
+        <ion-icon name="add"></ion-icon>
+      </div>
+    </div>
+    <div class="nav-item" (click)="navigateToInbox()">
+      <ion-icon name="mail"></ion-icon>
+      <span class="nav-label">Inbox</span>
+    </div>
+    <div class="nav-item" (click)="navigateToProfile()">
+      <ion-icon name="person"></ion-icon>
+      <span class="nav-label">Profile</span>
     </div>
   </div>
 </ion-content>
