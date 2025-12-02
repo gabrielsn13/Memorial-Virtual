@@ -1,0 +1,8 @@
+{
+  "name": "afteer",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "b3ec9524"
+}
