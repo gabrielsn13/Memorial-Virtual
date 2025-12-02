@@ -109,6 +109,9 @@ export class FeedPage implements OnInit {
   profiles: MemorialProfile[] = [];
   availableYears: number[] = [];
   selectedYear: number = 0;
+  searchYear: number | null = null;
+  currentYear: number = new Date().getFullYear();
+  showSearch: boolean = false;
 
   constructor(private router: Router) {}
 
@@ -152,6 +155,42 @@ export class FeedPage implements OnInit {
 
   selectYear(year: number) {
     this.filterProfilesByYear(year);
+    this.searchYear = null; // Limpar busca ao selecionar do scroll
+  }
+
+  onYearSearch() {
+    if (this.searchYear && this.searchYear >= 1821 && this.searchYear <= this.currentYear) {
+      // Verificar se o ano existe na lista
+      if (this.availableYears.includes(this.searchYear)) {
+        this.filterProfilesByYear(this.searchYear);
+        this.scrollToYear(this.searchYear);
+      } else {
+        // Se o ano não tem perfis, ainda permite selecionar para mostrar mensagem
+        this.filterProfilesByYear(this.searchYear);
+      }
+    }
+  }
+
+  clearYearSearch() {
+    this.searchYear = null;
+    // Manter o ano selecionado atual
+  }
+
+  toggleSearch() {
+    this.showSearch = !this.showSearch;
+    if (!this.showSearch) {
+      this.searchYear = null;
+    }
+  }
+
+  scrollToYear(year: number) {
+    // Scroll suave para o ano selecionado no scroll horizontal
+    setTimeout(() => {
+      const yearElement = document.querySelector(`[data-year="${year}"]`);
+      if (yearElement) {
+        yearElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+    }, 100);
   }
 
   openProfile(profileId: number) {

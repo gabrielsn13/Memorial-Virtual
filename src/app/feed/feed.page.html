@@ -2,11 +2,49 @@
   <div class="feed-container">
     <!-- Year Selector Scroll -->
     <div class="year-selector-container">
+      <!-- Search Input (aparece quando showSearch está true) -->
+      <div class="year-selector-header" *ngIf="showSearch">
+        <div class="year-search-container">
+          <ion-icon name="search-outline" class="search-icon"></ion-icon>
+          <ion-input 
+            type="number" 
+            [(ngModel)]="searchYear"
+            (ionInput)="onYearSearch()"
+            placeholder="Search year..."
+            class="year-search-input"
+            min="1821"
+            [max]="currentYear">
+          </ion-input>
+          <ion-button 
+            *ngIf="searchYear"
+            fill="clear" 
+            class="clear-button"
+            (click)="clearYearSearch()">
+            <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+          </ion-button>
+          <ion-button 
+            fill="clear" 
+            class="close-search-button"
+            (click)="toggleSearch()">
+            <ion-icon name="close" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+      </div>
+      
       <div class="year-selector-scroll">
+        <!-- Search Icon Button (fixo à esquerda) -->
+        <div 
+          class="search-icon-button"
+          (click)="toggleSearch()"
+          *ngIf="!showSearch">
+          <ion-icon name="search-outline"></ion-icon>
+        </div>
+        
         <div 
           *ngFor="let year of availableYears" 
           class="year-item"
           [class.active]="selectedYear === year"
+          [attr.data-year]="year"
           (click)="selectYear(year)">
           {{ year }}
         </div>

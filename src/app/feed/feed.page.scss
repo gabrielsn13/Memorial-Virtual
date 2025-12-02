@@ -23,8 +23,88 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
+.year-selector-header {
+  padding: 0 20px 12px 20px;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.year-search-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(25, 118, 210, 0.2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  transition: border-color 0.2s;
+
+  &:focus-within {
+    border-color: #1976D2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+  }
+}
+
+.close-search-button {
+  --color: #666666;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  margin: 0;
+  height: 32px;
+  width: 32px;
+  flex-shrink: 0;
+  
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.search-icon {
+  font-size: 20px;
+  color: #666666;
+  flex-shrink: 0;
+}
+
+.year-search-input {
+  flex: 1;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  font-size: 14px;
+  color: #333333;
+  
+  &::part(native) {
+    padding: 0;
+  }
+}
+
+.clear-button {
+  --color: #666666;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  margin: 0;
+  height: 24px;
+  width: 24px;
+  
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
 .year-selector-scroll {
   display: flex;
+  align-items: center;
   overflow-x: auto;
   overflow-y: hidden;
   gap: 12px;
@@ -38,6 +118,36 @@
   
   &::-webkit-scrollbar {
     display: none; // Chrome/Safari
+  }
+}
+
+.search-icon-button {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(25, 118, 210, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    border-color: rgba(25, 118, 210, 0.4);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: #1976D2;
   }
 }
 
