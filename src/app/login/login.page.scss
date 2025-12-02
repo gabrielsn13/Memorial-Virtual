@@ -285,6 +285,118 @@
   margin: 0;
 }
 
+// Afteer Form Style
+.afteer-form-container {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.back-button {
+  --color: #1976D2;
+  --padding-start: 0;
+  --padding-end: 0;
+  margin: 0;
+  position: absolute;
+  left: -8px;
+  
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.form-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1976D2;
+  margin: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.afteer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  margin-bottom: 0;
+}
+
+.afteer-input {
+  --background: #FAFAFA;
+  --color: #262626;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --placeholder-color: #8E8E8E;
+  --placeholder-opacity: 1;
+  border: 1px solid #DBDBDB;
+  border-radius: 4px;
+  font-size: 14px;
+  height: 40px;
+  transition: border-color 0.2s;
+
+  &::part(native) {
+    border-radius: 4px;
+  }
+
+  &.has-value {
+    border-color: #262626;
+  }
+
+  &:focus-within {
+    border-color: #262626;
+  }
+}
+
+.afteer-login-btn {
+  --background: #1976D2;
+  --color: #FFFFFF;
+  --border-radius: 4px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+
+  &:hover:not([disabled]) {
+    --background: #1565C0;
+  }
+
+  &[disabled] {
+    --background: #B2DFDB;
+    --color: #FFFFFF;
+    opacity: 0.6;
+  }
+}
+
 // Responsividade
 @media (max-width: 480px) {
   .login-main {
@@ -297,6 +409,10 @@
 
   .login-subtitle {
     font-size: 14px;
+  }
+
+  .afteer-form-container {
+    padding: 24px 20px;
   }
 
   .login-footer {

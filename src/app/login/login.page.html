@@ -16,10 +16,52 @@
     <!-- Conteúdo principal -->
     <div class="login-main">
       <h1 class="login-title">Log in to Afteer</h1>
-      <p class="login-subtitle">Manage your account, check notifications, comment on videos, and more.</p>
+      <p class="login-subtitle">Manage your memories, check another stories, comment on videos, and more.</p>
 
-      <!-- Botões de login -->
-      <div class="login-buttons">
+      <!-- Formulário de Login (estilo afteer) -->
+      <div class="afteer-form-container" *ngIf="showPhoneForm">
+        <div class="form-header">
+          <ion-button fill="clear" class="back-button" (click)="goBack()">
+            <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+          </ion-button>
+          <h2 class="form-title">Log in</h2>
+        </div>
+
+        <form class="afteer-form" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <ion-input
+              [(ngModel)]="phoneEmail"
+              type="text"
+              name="phoneEmail"
+              placeholder="Telefone, nome de usuário ou e-mail"
+              class="afteer-input"
+              [class.has-value]="phoneEmail">
+            </ion-input>
+          </div>
+
+          <div class="form-group">
+            <ion-input
+              [(ngModel)]="password"
+              type="password"
+              name="password"
+              placeholder="Senha"
+              class="afteer-input"
+              [class.has-value]="password">
+            </ion-input>
+          </div>
+
+          <ion-button
+            type="submit"
+            class="afteer-login-btn"
+            [disabled]="!isFormValid()"
+            expand="block">
+            Log in
+          </ion-button>
+        </form>
+      </div>
+
+      <!-- Botões de login (oculto quando formulário está visível) -->
+      <div class="login-buttons" *ngIf="!showPhoneForm">
 
         <ion-button 
           class="login-btn phone-btn" 
@@ -45,17 +87,10 @@
           Continue with Google
         </ion-button>
 
-        <ion-button 
-          class="login-btn apple-btn" 
-          (click)="onLoginMethod('apple')"
-          expand="block">
-          <ion-icon name="logo-apple" slot="start"></ion-icon>
-          Continue with Apple
-        </ion-button>
       </div>
 
-      <!-- Texto legal -->
-      <p class="legal-text">
+      <!-- Texto legal (oculto quando formulário está visível) -->
+      <p class="legal-text" *ngIf="!showPhoneForm">
         By continuing with an account located in <a href="#">Brazil</a>, you agree to our 
         <a href="#">Terms of Service</a> and acknowledge that you have read our 
         <a href="#">Privacy Policy</a>.
