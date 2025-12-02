@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 interface MemorialProfile {
   id: number;
@@ -65,10 +66,14 @@ export class FeedPage implements OnInit {
     }
   ];
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     // Aqui você pode carregar os perfis de uma API
+  }
+
+  openProfile(profileId: number) {
+    this.router.navigate(['/biography', profileId]);
   }
 }
 

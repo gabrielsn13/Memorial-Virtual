@@ -8,7 +8,8 @@
     <div class="profiles-list">
       <div 
         *ngFor="let profile of profiles" 
-        class="profile-card">
+        class="profile-card"
+        (click)="openProfile(profile.id)">
         
         <!-- Profile Image -->
         <div class="profile-image-container">

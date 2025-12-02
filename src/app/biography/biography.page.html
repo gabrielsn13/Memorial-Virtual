@@ -1,0 +1,100 @@
+<ion-content [fullscreen]="true" class="biography-content">
+  <div class="biography-container">
+    
+    <!-- Header com botão voltar -->
+    <div class="biography-header">
+      <ion-button fill="clear" class="back-button" (click)="goBack()">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+      <img src="assets/images/afteer.png" alt="Afteer Logo" class="header-logo">
+      <span class="header-app-name">Afteer</span>
+    </div>
+
+    <!-- Timeline Container -->
+    <div class="timeline-wrapper">
+      <!-- Timeline Line -->
+      <div class="timeline-line"></div>
+
+      <!-- Profile Header Card -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content profile-header-card">
+          <h1 class="profile-name-header">{{ profile.name }}</h1>
+        </div>
+      </div>
+
+      <!-- Profile Info Card -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content profile-info-card">
+          <div class="profile-info-content">
+            <div class="profile-image-wrapper">
+              <img [src]="profile.imageUrl" [alt]="profile.name" class="profile-header-image">
+            </div>
+            <div class="dates-wrapper">
+              <div class="date-box-header">
+                <span class="date-icon">*</span>
+                <span class="date-text">{{ profile.birthDate }}</span>
+              </div>
+              <div class="date-box-header">
+                <span class="date-icon">+</span>
+                <span class="date-text">{{ profile.deathDate }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="message-box-header">
+            <p class="message-text-header">{{ profile.message }}</p>
+            <p class="relationship-text-header">{{ profile.relationship }}</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biography Section -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content biography-card">
+          <h2 class="biography-title">{{ profile.biography.title }}</h2>
+          <h3 class="biography-subtitle">{{ profile.biography.subtitle }}</h3>
+          <p class="biography-text">{{ profile.biography.text }}</p>
+          <a href="#" class="read-more-link">Read full text</a>
+        </div>
+      </div>
+
+      <!-- Personal Reflection -->
+      <div class="timeline-item">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content reflection-text">
+          <p class="reflection-author">{{ profile.personalReflection.author }}</p>
+          <p class="reflection-content">{{ profile.personalReflection.text }}</p>
+        </div>
+      </div>
+
+      <!-- Photos and Videos -->
+      <div class="timeline-item" *ngFor="let item of biographyItems">
+        <div class="timeline-marker"></div>
+        <div class="timeline-content media-card">
+          <div class="media-container">
+            <img 
+              *ngIf="item.type === 'photo'" 
+              [src]="item.imageUrl" 
+              [alt]="item.caption"
+              class="media-image">
+            
+            <div 
+              *ngIf="item.type === 'video'" 
+              class="video-container"
+              (click)="playVideo(item.videoUrl || '')">
+              <img [src]="item.imageUrl" [alt]="item.caption" class="media-image">
+              <div class="play-button">
+                <ion-icon name="play" class="play-icon"></ion-icon>
+              </div>
+            </div>
+          </div>
+          <p class="media-caption" *ngIf="item.caption">{{ item.caption }}</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</ion-content>
+
