@@ -132,53 +132,7 @@
 
         <!-- timeline Tab -->
         <div class="tab-content" *ngIf="activeTab === 'timeline'">
-          <h3 class="section-title">timeline</h3>
-          
-          <div class="upload-section">
-            <input 
-              #fileInput
-              type="file" 
-              multiple 
-              accept="image/*,video/*"
-              (change)="onFileSelected($event)"
-              style="display: none;">
-            <ion-button 
-              class="upload-button"
-              (click)="triggerFileInput()"
-              expand="block">
-              <ion-icon name="cloud-upload-outline" slot="start"></ion-icon>
-              Upload Photos & Videos
-            </ion-button>
-          </div>
-
-          <div class="timeline-grid">
-            <div 
-              *ngFor="let memento of timeline" 
-              class="memento-item"
-              [class.video-item]="memento.type === 'video'">
-              <img 
-                *ngIf="memento.type === 'image'"
-                [src]="memento.url" 
-                alt="Memento"
-                class="memento-image">
-              <div 
-                *ngIf="memento.type === 'video'"
-                class="video-preview">
-                <img [src]="memento.url" alt="Video" class="memento-image">
-                <ion-icon name="play-circle" class="play-overlay"></ion-icon>
-              </div>
-              <button 
-                class="remove-memento"
-                (click)="removeMemento(memento.id)">
-                <ion-icon name="close-circle"></ion-icon>
-              </button>
-            </div>
-            
-            <!-- Placeholder for more items -->
-            <div class="memento-item placeholder" *ngIf="timeline.length < 9">
-              <span>+{{ 9 - timeline.length }}</span>
-            </div>
-          </div>
+          <app-profile-timeline-editor></app-profile-timeline-editor>
         </div>
 
         <!-- Keeper Tab -->

@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ item ? 'Editar Item' : 'Adicionar Item à Timeline' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="modal-content">
+  <div class="form-container">
+    <!-- Campo de Texto -->
+    <ion-item class="form-item">
+      <ion-label position="stacked">Texto *</ion-label>
+      <ion-textarea
+        [(ngModel)]="formData.text"
+        rows="6"
+        placeholder="Descreva este momento especial..."
+        class="form-textarea">
+      </ion-textarea>
+    </ion-item>
+
+    <!-- Upload de Imagem -->
+    <div class="image-section">
+      <ion-item class="form-item">
+        <ion-label position="stacked">Imagem</ion-label>
+        <div class="image-upload-container">
+          <input 
+            #imageInput
+            type="file" 
+            accept="image/*"
+            (change)="onImageSelected($event)"
+            style="display: none;">
+          
+          <ion-button 
+            expand="block" 
+            fill="outline"
+            (click)="triggerImageInput()"
+            class="upload-button">
+            <ion-icon name="image-outline" slot="start"></ion-icon>
+            {{ imagePreview ? 'Alterar Imagem' : 'Selecionar Imagem' }}
+          </ion-button>
+        </div>
+      </ion-item>
+
+      <!-- Preview da Imagem -->
+      <div class="image-preview" *ngIf="imagePreview">
+        <img [src]="imagePreview" alt="Preview" />
+        <ion-button 
+          fill="clear" 
+          color="danger"
+          (click)="removeImage()"
+          class="remove-image-button">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Campo de Vídeo (URL do YouTube) -->
+    <ion-item class="form-item">
+      <ion-label position="stacked">Vídeo (URL do YouTube)</ion-label>
+      <ion-input
+        [(ngModel)]="formData.videoUrl"
+        type="url"
+        placeholder="https://www.youtube.com/watch?v=..."
+        class="form-input">
+      </ion-input>
+    </ion-item>
+
+    <div class="form-help-text">
+      <ion-icon name="information-circle-outline"></ion-icon>
+      <span>Preencha pelo menos um campo: texto, imagem ou vídeo.</span>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()" color="medium">
+        Cancelar
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button 
+        (click)="save()" 
+        [disabled]="!isFormValid()"
+        color="primary">
+        <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+        Salvar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
