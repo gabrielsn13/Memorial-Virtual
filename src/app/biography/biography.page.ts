@@ -237,7 +237,8 @@ export class BiographyPage implements OnInit {
     const videoId = (match && match[2].length === 11) ? match[2] : null;
     
     if (videoId) {
-      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      const origin = typeof window !== 'undefined' ? window.location.origin : '';
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1&playsinline=1&enablejsapi=1${origin ? `&origin=${origin}` : ''}`;
       return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
     }
     return this.sanitizer.bypassSecurityTrustResourceUrl('');
