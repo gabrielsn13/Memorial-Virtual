@@ -2,11 +2,22 @@
   <div class="profile-container">
     
 
+    <!-- Hidden Input for Profile Image -->
+    <input 
+      #profileImageInput
+      type="file" 
+      accept="image/*"
+      style="display: none;"
+      (change)="onProfileImageSelected($event)">
+
     <!-- Banner Section -->
     <div class="banner-section">
       <div class="banner-image">
-        <div class="profile-image-banner">
-          <img src="https://via.placeholder.com/150/FFB6C1/FFFFFF?text=You" alt="Profile" class="banner-profile-img">
+        <div class="profile-image-banner" (click)="openProfileImageMenu()">
+          <img [src]="userProfile.profileImage" alt="Profile" class="banner-profile-img">
+          <div class="profile-image-overlay">
+            <ion-icon name="camera-outline" class="camera-icon"></ion-icon>
+          </div>
         </div>
         <div class="banner-content">
           <h1 class="banner-name">{{ userProfile.name }}</h1>
@@ -105,6 +116,7 @@
             <ion-textarea 
               [(ngModel)]="userProfile.biography"
               rows="10"
+              style="color: #000000 !important;"
               placeholder="Write the biography here..."
               class="biography-textarea">
             </ion-textarea>
