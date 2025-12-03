@@ -103,6 +103,17 @@ export class FeedPage implements OnInit {
       relationship: 'In memory, a figure who shaped European history.',
       isPublicFigure: true,
       isHistoricalFigure: true
+    },
+    {
+      id: 10,
+      name: 'John Lennon',
+      birthDate: '09.10.1940',
+      deathDate: '08.12.1980',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/85/John_Lennon_1969_%28cropped%29.jpg',
+      message: 'Musician, songwriter, peace activist, and co-founder of The Beatles',
+      relationship: 'In memory, a voice for peace and love that continues to inspire generations.',
+      isPublicFigure: true,
+      isHistoricalFigure: true
     }
   ];
 

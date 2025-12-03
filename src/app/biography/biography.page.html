@@ -82,11 +82,34 @@
             
             <div 
               *ngIf="item.type === 'video'" 
-              class="video-container"
-              (click)="playVideo(item.videoUrl || '')">
-              <img [src]="item.imageUrl" [alt]="item.caption" class="media-image">
-              <div class="play-button">
-                <ion-icon name="play" class="play-icon"></ion-icon>
+              class="video-container">
+              <!-- Player do YouTube quando está reproduzindo -->
+              <iframe
+                *ngIf="isVideoPlaying(item.id) && item.videoUrl"
+                [src]="getYouTubeEmbedUrl(item.videoUrl)"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+                class="youtube-iframe">
+              </iframe>
+              
+              <!-- Thumbnail com botão de play quando não está reproduzindo -->
+              <div
+                *ngIf="!isVideoPlaying(item.id)"
+                class="video-thumbnail"
+                (click)="playVideo(item)">
+                <img [src]="item.imageUrl" [alt]="item.caption" class="media-image">
+                <div class="play-button">
+                  <ion-icon name="play" class="play-icon"></ion-icon>
+                </div>
+              </div>
+              
+              <!-- Botão para fechar o vídeo quando está reproduzindo -->
+              <div
+                *ngIf="isVideoPlaying(item.id)"
+                class="close-video-button"
+                (click)="playVideo(item)">
+                <ion-icon name="close" class="close-icon"></ion-icon>
               </div>
             </div>
           </div>
