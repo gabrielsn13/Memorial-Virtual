@@ -1,85 +1,193 @@
 <div class="timeline-editor-container">
-  <!-- Botão para adicionar item -->
-  <div class="add-item-section">
-    <ion-button 
-      expand="block" 
-      color="primary"
-      (click)="openAddItemModal()"
-      class="add-item-button">
-      <ion-icon name="add-circle-outline" slot="start"></ion-icon>
-      Adicionar item à timeline
-    </ion-button>
+  <!-- Editor estilo Twitter/X -->
+  <div class="post-editor">
+    <div class="editor-content">
+      <!-- Foto do usuário -->
+      <div class="user-avatar">
+        <img [src]="userProfileImage" alt="User" />
+      </div>
+
+      <!-- Área de edição -->
+      <div class="editor-main">
+        <!-- Campo de texto -->
+        <ion-textarea
+          [(ngModel)]="postText"
+          placeholder="What's happening?"
+          [autoGrow]="true"
+          rows="1"
+          class="post-textarea">
+        </ion-textarea>
+
+        <!-- Preview de imagem -->
+        <div class="image-preview" *ngIf="selectedImage">
+          <img [src]="selectedImage" alt="Preview" />
+          <ion-button 
+            fill="clear" 
+            color="danger"
+            (click)="removeImage()"
+            class="remove-image-btn">
+            <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+          </ion-button>
+        </div>
+
+        <!-- Barra de ícones (toolbar) -->
+        <div class="editor-toolbar">
+          <div class="toolbar-icons">
+            <!-- Imagem -->
+            <input 
+              #imageInput
+              type="file" 
+              accept="image/*"
+              (change)="onImageSelected($event)"
+              style="display: none;">
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="triggerImageInput()"
+              class="toolbar-icon-btn">
+              <ion-icon name="image-outline"></ion-icon>
+            </ion-button>
+
+            <!-- GIF -->
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="openGIFPicker()"
+              class="toolbar-icon-btn">
+              <ion-icon name="gift-outline"></ion-icon>
+            </ion-button>
+
+            <!-- Enquete -->
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="openPollCreator()"
+              class="toolbar-icon-btn">
+              <ion-icon name="stats-chart-outline"></ion-icon>
+            </ion-button>
+
+            <!-- Emoji -->
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="openEmojiPicker()"
+              class="toolbar-icon-btn">
+              <ion-icon name="happy-outline"></ion-icon>
+            </ion-button>
+
+            <!-- Câmera -->
+            <input 
+              #videoInput
+              type="file" 
+              accept="video/*,image/*"
+              (change)="onVideoSelected($event)"
+              style="display: none;">
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="triggerVideoInput()"
+              class="toolbar-icon-btn">
+              <ion-icon name="camera-outline"></ion-icon>
+            </ion-button>
+
+            <!-- Localização -->
+            <ion-button 
+              fill="clear" 
+              size="small"
+              (click)="openLocationPicker()"
+              class="toolbar-icon-btn">
+              <ion-icon name="location-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+          <!-- Botão Post -->
+          <ion-button 
+            [disabled]="!canPost()"
+            (click)="post()"
+            class="post-button">
+            Post
+          </ion-button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Lista de itens da timeline -->
   <div class="timeline-list" *ngIf="timelineItems.length > 0">
-    <ion-card 
+    <div 
       *ngFor="let item of timelineItems" 
       class="timeline-item-card">
       
-      <!-- Cabeçalho do card com data e ações -->
-      <ion-card-header>
-        <div class="card-header-content">
-          <div class="item-date">
-            <ion-icon name="calendar-outline"></ion-icon>
-            <span>{{ formatDate(item.createdAt) }}</span>
-          </div>
-          <div class="item-actions">
-            <ion-button 
-              fill="clear" 
-              size="small"
-              (click)="openEditItemModal(item)"
-              class="action-button">
-              <ion-icon name="create-outline" slot="icon-only"></ion-icon>
-            </ion-button>
-            <ion-button 
-              fill="clear" 
-              size="small"
-              color="danger"
-              (click)="deleteItem(item)"
-              class="action-button">
-              <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-            </ion-button>
-          </div>
-        </div>
-      </ion-card-header>
-
-      <!-- Conteúdo do card -->
-      <ion-card-content>
-        <!-- Texto -->
-        <div class="item-text" *ngIf="item.text">
-          <p>{{ item.text }}</p>
+      <div class="timeline-item-content">
+        <!-- Avatar do usuário -->
+        <div class="item-avatar">
+          <img [src]="userProfileImage" alt="User" />
         </div>
 
-        <!-- Imagem -->
-        <div class="item-image" *ngIf="item.imageUrl">
-          <img [src]="item.imageUrl" alt="Timeline image" />
-        </div>
+        <!-- Conteúdo do post -->
+        <div class="item-main">
+          <!-- Cabeçalho com data e ações -->
+          <div class="item-header">
+            <div class="item-info">
+              <span class="item-name">You</span>
+              <span class="item-username">@you</span>
+              <span class="item-date-separator">·</span>
+              <span class="item-date">{{ formatDate(item.createdAt) }}</span>
+            </div>
+            <div class="item-actions">
+              <ion-button 
+                fill="clear" 
+                size="small"
+                (click)="openEditItemModal(item)"
+                class="action-button">
+                <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+              <ion-button 
+                fill="clear" 
+                size="small"
+                color="danger"
+                (click)="deleteItem(item)"
+                class="action-button">
+                <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
 
-        <!-- Vídeo -->
-        <div class="item-video" *ngIf="item.videoUrl">
-          <div *ngIf="isYouTubeUrl(item.videoUrl)" class="youtube-video">
-            <iframe 
-              [src]="getYouTubeEmbedUrl(item.videoUrl) | safe"
-              frameborder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowfullscreen>
-            </iframe>
+          <!-- Texto -->
+          <div class="item-text" *ngIf="item.text">
+            <p>{{ item.text }}</p>
           </div>
-          <div *ngIf="!isYouTubeUrl(item.videoUrl)" class="video-url">
-            <ion-icon name="videocam-outline"></ion-icon>
-            <a [href]="item.videoUrl" target="_blank">{{ item.videoUrl }}</a>
+
+          <!-- Imagem -->
+          <div class="item-image" *ngIf="item.imageUrl">
+            <img [src]="item.imageUrl" alt="Timeline image" />
+          </div>
+
+          <!-- Vídeo -->
+          <div class="item-video" *ngIf="item.videoUrl">
+            <div *ngIf="isYouTubeUrl(item.videoUrl)" class="youtube-video">
+              <iframe 
+                [src]="getYouTubeEmbedUrl(item.videoUrl) | safe"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div *ngIf="!isYouTubeUrl(item.videoUrl)" class="video-url">
+              <ion-icon name="videocam-outline"></ion-icon>
+              <a [href]="item.videoUrl" target="_blank">{{ item.videoUrl }}</a>
+            </div>
           </div>
         </div>
-      </ion-card-content>
-    </ion-card>
+      </div>
+    </div>
   </div>
 
   <!-- Mensagem quando não há itens -->
   <div class="empty-state" *ngIf="timelineItems.length === 0">
     <ion-icon name="images-outline" class="empty-icon"></ion-icon>
-    <p class="empty-message">Nenhum item na timeline ainda.</p>
-    <p class="empty-submessage">Clique no botão acima para adicionar seu primeiro item!</p>
+    <p class="empty-message">Nenhum post ainda.</p>
+    <p class="empty-submessage">Use o editor acima para criar seu primeiro post!</p>
   </div>
 </div>
 
