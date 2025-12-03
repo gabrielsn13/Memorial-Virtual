@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 
 interface BiographyItem {
   id: number;
@@ -102,13 +102,13 @@ export class BiographyPage implements OnInit {
           {
             id: 1,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Napoleon_Bonaparte.jpg/800px-Napoleon_Bonaparte.jpg',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Napoleon_Bonaparte.jpg',
             caption: 'Napoleon Bonaparte in his prime'
           },
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg/800px-Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg',
             caption: 'Emperor Napoleon in his study'
           },
           {
@@ -147,47 +147,47 @@ export class BiographyPage implements OnInit {
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Beatles_White_Album.jpg/800px-Beatles_White_Album.jpg',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Beatles_White_Album.jpg',
             caption: 'The Beatles - White Album era'
           },
           {
             id: 3,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/John_Lennon_1964.jpg/800px-John_Lennon_1964.jpg',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/John_Lennon_1964.jpg',
             caption: 'John Lennon with The Beatles in 1964'
           },
           {
             id: 4,
             type: 'video',
-            imageUrl: 'https://img.youtube.com/vi/YkgkThdzX-8/maxresdefault.jpg',
+            imageUrl: 'https://img.youtube.com/vi/YkgkThdzX-8/hqdefault.jpg',
             videoUrl: 'https://www.youtube.com/watch?v=YkgkThdzX-8',
             caption: 'Imagine - John Lennon (Official Video)'
           },
           {
             id: 5,
             type: 'video',
-            imageUrl: 'https://img.youtube.com/vi/RwUGSYDKUxU/maxresdefault.jpg',
+            imageUrl: 'https://img.youtube.com/vi/RwUGSYDKUxU/hqdefault.jpg',
             videoUrl: 'https://www.youtube.com/watch?v=RwUGSYDKUxU',
             caption: 'Give Peace a Chance - John Lennon & Yoko Ono'
           },
           {
             id: 6,
             type: 'video',
-            imageUrl: 'https://img.youtube.com/vi/A_MjCqQoLLA/maxresdefault.jpg',
+            imageUrl: 'https://img.youtube.com/vi/A_MjCqQoLLA/hqdefault.jpg',
             videoUrl: 'https://www.youtube.com/watch?v=A_MjCqQoLLA',
             caption: 'The Beatles - Hey Jude (Live Performance)'
           },
           {
             id: 8,
             type: 'video',
-            imageUrl: 'https://img.youtube.com/vi/iNweX0piP0g/maxresdefault.jpg',
+            imageUrl: 'https://img.youtube.com/vi/iNweX0piP0g/hqdefault.jpg',
             videoUrl: 'https://www.youtube.com/watch?v=iNweX0piP0g',
             caption: 'Biography of John Lennon - Documentary'
           },
           {
             id: 7,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/John_Lennon_and_Yoko_Ono_1978.jpg/800px-John_Lennon_and_Yoko_Ono_1978.jpg',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/John_Lennon_and_Yoko_Ono_1978.jpg',
             caption: 'John Lennon and Yoko Ono, 1978'
           }
         ]
@@ -245,6 +245,13 @@ export class BiographyPage implements OnInit {
 
   isVideoPlaying(itemId: number): boolean {
     return this.playingVideoId === itemId;
+  }
+
+  getSafeImageUrl(imageUrl: string | undefined): SafeUrl {
+    if (!imageUrl) {
+      return this.sanitizer.bypassSecurityTrustUrl('');
+    }
+    return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
   }
 }
 

@@ -29,7 +29,7 @@
         <div class="timeline-content profile-info-card">
           <div class="profile-info-content">
             <div class="profile-image-wrapper">
-              <img [src]="profile.imageUrl" [alt]="profile.name" class="profile-header-image">
+              <img [src]="getSafeImageUrl(profile.imageUrl)" [alt]="profile.name" class="profile-header-image">
             </div>
             <div class="dates-wrapper">
               <div class="date-box-header">
@@ -76,7 +76,7 @@
           <div class="media-container">
             <img 
               *ngIf="item.type === 'photo'" 
-              [src]="item.imageUrl" 
+              [src]="getSafeImageUrl(item.imageUrl)" 
               [alt]="item.caption"
               class="media-image">
             
@@ -98,7 +98,7 @@
                 *ngIf="!isVideoPlaying(item.id)"
                 class="video-thumbnail"
                 (click)="playVideo(item)">
-                <img [src]="item.imageUrl" [alt]="item.caption" class="media-image">
+                <img [src]="getSafeImageUrl(item.imageUrl)" [alt]="item.caption" class="media-image">
                 <div class="play-button">
                   <ion-icon name="play" class="play-icon"></ion-icon>
                 </div>
