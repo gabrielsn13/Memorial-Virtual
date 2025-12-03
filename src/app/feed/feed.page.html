@@ -5,11 +5,11 @@
       <!-- Botão para expandir/colapsar -->
       <div class="filter-header" (click)="toggleFilter()">
         <div class="filter-header-content">
+          <ion-icon name="search-outline" class="filter-input-icon"></ion-icon>
           <ion-icon 
             [name]="isFilterExpanded ? 'chevron-up-outline' : 'chevron-down-outline'" 
             class="filter-toggle-icon">
           </ion-icon>
-          <span class="filter-header-text">Filtros</span>
           <span class="filter-badge" *ngIf="hasActiveFilters()">{{ getActiveFiltersCount() }}</span>
         </div>
       </div>
@@ -19,13 +19,11 @@
         <div class="filter-fields">
           <!-- Campo de busca por texto -->
           <div class="filter-field">
-            <label class="filter-label">Buscar por nome ou texto</label>
             <div class="filter-input-container">
               <ion-icon name="search-outline" class="filter-input-icon"></ion-icon>
               <ion-input 
                 [(ngModel)]="filterText"
-                (ionInput)="applyFilters()"
-                placeholder="Digite para buscar..."
+                placeholder="Type to search..."
                 class="filter-input">
               </ion-input>
               <ion-button 
@@ -39,35 +37,36 @@
           </div>
 
           <!-- Campos de data -->
-          <div class="filter-field">
-            <label class="filter-label">Período (opcional)</label>
-            <div class="date-fields-container">
-              <div class="date-field">
-                <label class="date-field-label">Data inicial</label>
-                <div class="datetime-input-wrapper">
-                  <ion-input
-                    [value]="formatDateForDisplay(filterStartDate)"
-                    placeholder="Selecione a data inicial"
-                    readonly
-                    (click)="openStartDatePicker()"
-                    class="datetime-input">
-                  </ion-input>
-                  <ion-button 
-                    *ngIf="filterStartDate"
-                    fill="clear" 
-                    size="small"
-                    class="date-clear-button"
-                    (click)="clearStartDate()">
-                    <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-                  </ion-button>
-                </div>
+           <table>
+            <tr>
+              <td>
+                <label class="filter-label">From</label>
+              </td>
+              <td>
+                <label class="filter-label">Until</label>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <ion-input [value]="formatDateForDisplay(filterStartDate)" 
+                placeholder="Selecione a data inicial" 
+                readonly (click)="openStartDatePicker()" 
+                class="datetime-input">
+                </ion-input>
+                <ion-button 
+                *ngIf="filterStartDate"
+                fill="clear" 
+                size="small"
+                class="date-clear-button"
+                (click)="clearStartDate()">
+                <ion-icon name="close-circle" slot="icon-only"></ion-icon>
                 <ion-modal #startDateModal>
                   <ng-template>
                     <ion-header>
                       <ion-toolbar>
-                        <ion-title>Selecionar Data Inicial</ion-title>
+                        <ion-title>Select Start Date</ion-title>
                         <ion-buttons slot="end">
-                          <ion-button (click)="startDateModal.dismiss()">Fechar</ion-button>
+                          <ion-button (click)="startDateModal.dismiss()">Close</ion-button>
                         </ion-buttons>
                       </ion-toolbar>
                     </ion-header>
@@ -82,83 +81,84 @@
                     </ion-content>
                   </ng-template>
                 </ion-modal>
-              </div>
-              <div class="date-field">
-                <label class="date-field-label">Data final</label>
-                <div class="datetime-input-wrapper">
-                  <ion-input
-                    [value]="formatDateForDisplay(filterEndDate)"
-                    placeholder="Selecione a data final"
-                    readonly
-                    (click)="openEndDatePicker()"
-                    class="datetime-input">
-                  </ion-input>
-                  <ion-button 
-                    *ngIf="filterEndDate"
-                    fill="clear" 
-                    size="small"
-                    class="date-clear-button"
-                    (click)="clearEndDate()">
-                    <ion-icon name="close-circle" slot="icon-only"></ion-icon>
-                  </ion-button>
-                </div>
-                <ion-modal #endDateModal>
-                  <ng-template>
-                    <ion-header>
-                      <ion-toolbar>
-                        <ion-title>Selecionar Data Final</ion-title>
-                        <ion-buttons slot="end">
-                          <ion-button (click)="endDateModal.dismiss()">Fechar</ion-button>
-                        </ion-buttons>
-                      </ion-toolbar>
-                    </ion-header>
-                    <ion-content>
-                      <ion-datetime
-                        [(ngModel)]="filterEndDate"
-                        (ionChange)="onEndDateChange()"
-                        presentation="date"
-                        [min]="filterStartDate"
-                        [max]="maxDate"
-                        [value]="filterEndDate">
-                      </ion-datetime>
-                    </ion-content>
-                  </ng-template>
-                </ion-modal>
-              </div>
-            </div>
-          </div>
+              </ion-button>
+              </td>
+              <td>
+                <ion-input [value]="formatDateForDisplay(filterEndDate)" 
+                placeholder="Selecione a data final" 
+                readonly (click)="openEndDatePicker()" 
+                class="datetime-input">
+                </ion-input>
+                <ion-button 
+                *ngIf="filterEndDate"
+                fill="clear" 
+                size="small"
+                class="date-clear-button"
+                (click)="clearEndDate()">
+                <ion-icon name="close-circle" slot="icon-only"></ion-icon>
+              </ion-button>
+              <ion-modal #endDateModal>
+                <ng-template>
+                  <ion-header>
+                    <ion-toolbar>
+                      <ion-title>Select End Date</ion-title>
+                      <ion-buttons slot="end">
+                        <ion-button (click)="endDateModal.dismiss()">Close</ion-button>
+                      </ion-buttons>
+                    </ion-toolbar>
+                  </ion-header>
+                  <ion-content>
+                    <ion-datetime
+                      [(ngModel)]="filterEndDate"
+                      (ionChange)="onEndDateChange()"
+                      presentation="date"
+                      [min]="filterStartDate"
+                      [max]="maxDate"
+                      [value]="filterEndDate">
+                    </ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+              </td>
+            </tr>
+          </table>
 
           <!-- Seleção de categorias -->
           <div class="filter-field">
-            <label class="filter-label">Categorias (opcional)</label>
+            <label class="filter-label">Categories</label>
             <div class="categories-container">
               <ion-item class="category-item">
                 <ion-checkbox 
                   [(ngModel)]="filterCategories.publicFigure"
-                  (ionChange)="applyFilters()"
                   slot="start">
                 </ion-checkbox>
-                <ion-label>Figura pública</ion-label>
+                <ion-label>Public Person</ion-label>
               </ion-item>
               <ion-item class="category-item">
                 <ion-checkbox 
                   [(ngModel)]="filterCategories.family"
-                  (ionChange)="applyFilters()"
                   slot="start">
                 </ion-checkbox>
-                <ion-label>Família</ion-label>
+                <ion-label>Family</ion-label>
               </ion-item>
               <ion-item class="category-item">
                 <ion-checkbox 
                   [(ngModel)]="filterCategories.individuals"
-                  (ionChange)="applyFilters()"
                   slot="start">
                 </ion-checkbox>
-                <ion-label>Indivíduos</ion-label>
+                <ion-label>Individual</ion-label>
               </ion-item>
             </div>
           </div>
 
+          <ion-button 
+          expand="block" 
+          fill="outline"
+          (click)="applyFilters()"
+          class="afteer-btn">
+          <ion-icon name="search-outline" slot="start"></ion-icon>
+          Search
+        </ion-button>
           <!-- Botão para limpar filtros -->
           <div class="filter-actions" *ngIf="hasActiveFilters()">
             <ion-button 
@@ -167,7 +167,7 @@
               (click)="clearAllFilters()"
               class="clear-filters-button">
               <ion-icon name="close-circle-outline" slot="start"></ion-icon>
-              Limpar filtros
+              Clear Filters
             </ion-button>
           </div>
         </div>
@@ -178,7 +178,7 @@
       <div 
         *ngIf="profiles.length === 0" 
         class="no-profiles-message">
-        <p>Nenhum perfil encontrado com os filtros aplicados</p>
+        <p>None posts found.</p>
       </div>
       
       <div 

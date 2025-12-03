@@ -11,6 +11,32 @@
   position: relative;
 }
 
+
+
+.afteer-btn {
+  --background: #1976D2;
+  --color: #FFFFFF;
+  --border-radius: 4px;
+  --padding-top: 12px;
+  --padding-bottom: 12px;
+  height: 44px;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: none;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+
+  &:hover:not([disabled]) {
+    --background: #1565C0;
+  }
+
+  &[disabled] {
+    --background: #B2DFDB;
+    --color: #FFFFFF;
+    opacity: 0.6;
+  }
+}
+
 // Filtro Expandível
 .filter-container {
   position: sticky;
