@@ -158,32 +158,6 @@
 
       </div>
 
-      <!-- Sidebar -->
-      <div class="profile-sidebar">
-        <div class="sidebar-section">
-          <h3 class="sidebar-title">timeline</h3>
-          <div class="sidebar-timeline">
-            <div 
-              *ngFor="let memento of timeline.slice(0, 9)" 
-              class="sidebar-memento">
-              <img 
-                *ngIf="memento.type === 'image'"
-                [src]="memento.url" 
-                alt="Memento"
-                class="sidebar-memento-img">
-              <div 
-                *ngIf="memento.type === 'video'"
-                class="sidebar-memento-video">
-                <img [src]="memento.url" alt="Video" class="sidebar-memento-img">
-                <ion-icon name="play" class="sidebar-play-icon"></ion-icon>
-              </div>
-            </div>
-            <div class="sidebar-memento placeholder" *ngIf="timeline.length < 9">
-              <span>+{{ 9 - timeline.length }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
