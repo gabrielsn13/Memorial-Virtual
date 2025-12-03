@@ -102,13 +102,13 @@ export class BiographyPage implements OnInit {
           {
             id: 1,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=10',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Napoleon_Bonaparte.jpg',
             caption: 'Napoleon Bonaparte in his prime'
           },
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=11',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg',
             caption: 'Emperor Napoleon in his study'
           },
           {
@@ -141,19 +141,19 @@ export class BiographyPage implements OnInit {
           {
             id: 1,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=1',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/85/John_Lennon_1969_%28cropped%29.jpg',
             caption: 'John Lennon in 1969'
           },
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=2',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/en/4/4f/TheBeatles68LP.jpg',
             caption: 'The Beatles - White Album era'
           },
           {
             id: 3,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=3',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/John_Lennon_1964.jpg',
             caption: 'John Lennon with The Beatles in 1964'
           },
           {
@@ -187,8 +187,152 @@ export class BiographyPage implements OnInit {
           {
             id: 7,
             type: 'photo',
-            imageUrl: 'https://picsum.photos/800/600?random=7',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/John_Lennon_and_Yoko_Ono_1978.jpg',
             caption: 'John Lennon and Yoko Ono, 1978'
+          }
+        ]
+      },
+      11: { // Michael Jackson
+        id: 11,
+        name: 'Michael Jackson',
+        birthDate: '29.08.1958',
+        deathDate: '25.06.2009',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+        message: 'The King of Pop, legendary performer, and one of the most influential entertainers of all time',
+        relationship: 'In memory, an icon whose music and dance continue to inspire millions worldwide.',
+        biography: {
+          title: 'Biography',
+          subtitle: 'From Gary to Global Stardom: The Journey of the King of Pop.',
+          text: 'Michael Joseph Jackson was born in Gary, Indiana, and rose to fame as a member of the Jackson 5 before becoming one of the most successful solo artists in history. Known as the "King of Pop," Jackson revolutionized music videos, dance, and popular culture. His albums "Thriller," "Bad," and "Dangerous" broke records worldwide, and his innovative dance moves, particularly the moonwalk, became iconic. Beyond his musical achievements, Jackson was a humanitarian who supported numerous charities. His untimely death in 2009 shocked the world, but his legacy as one of the greatest entertainers of all time endures.'
+        },
+        personalReflection: {
+          author: 'Music Fan, 2024',
+          text: 'Michael Jackson\'s music transcended boundaries and brought people together. His artistry and humanitarian spirit continue to inspire new generations of artists and fans around the world.'
+        },
+        biographyItems: [
+          {
+            id: 1,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+            caption: 'Michael Jackson in his prime'
+          },
+          {
+            id: 2,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Jackson5ABC1971.jpg',
+            caption: 'The Jackson 5 era'
+          },
+          {
+            id: 3,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/d4/Michael_Jackson_1984.jpg',
+            caption: 'Michael Jackson performing live'
+          },
+          {
+            id: 4,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/Zi_XLOBDo_Y/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=Zi_XLOBDo_Y',
+            caption: 'Billie Jean - Michael Jackson (Official Video)'
+          },
+          {
+            id: 5,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/sOnqjkJTMaA/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=sOnqjkJTMaA',
+            caption: 'Thriller - Michael Jackson (Official Video)'
+          },
+          {
+            id: 6,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/oRdxUFDoQe0/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=oRdxUFDoQe0',
+            caption: 'Beat It - Michael Jackson (Official Video)'
+          },
+          {
+            id: 7,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/h_D3VFfhvs4/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=h_D3VFfhvs4',
+            caption: 'Smooth Criminal - Michael Jackson (Official Video)'
+          },
+          {
+            id: 8,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5a/Michael_Jackson_in_1988.jpg',
+            caption: 'Michael Jackson - Humanitarian and Artist'
+          }
+        ]
+      },
+      12: { // Kurt Cobain
+        id: 12,
+        name: 'Kurt Cobain',
+        birthDate: '20.02.1967',
+        deathDate: '05.04.1994',
+        imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Kurt_Cobain_1991.jpg',
+        message: 'Singer, songwriter, and guitarist of Nirvana, voice of Generation X',
+        relationship: 'In memory, a musical genius whose raw emotion and authenticity changed rock music forever.',
+        biography: {
+          title: 'Biography',
+          subtitle: 'From Aberdeen to Alt-Rock Icon: The Life of a Grunge Legend.',
+          text: 'Kurt Donald Cobain was born in Aberdeen, Washington, and became the frontman and primary songwriter of the band Nirvana. As the voice of Generation X, Cobain helped bring alternative rock and grunge music to mainstream audiences. Nirvana\'s breakthrough album "Nevermind," featuring the iconic "Smells Like Teen Spirit," revolutionized the music industry in the early 1990s. Cobain\'s raw, emotional songwriting and powerful performances resonated with millions, but he struggled with personal demons throughout his life. His tragic death in 1994 at the age of 27 shocked the music world, but his influence on rock music and culture remains profound and enduring.'
+        },
+        personalReflection: {
+          author: 'Rock Music Lover, 2024',
+          text: 'Kurt Cobain gave voice to a generation with his honest, raw music. His songs continue to resonate with those who feel misunderstood, and his legacy as a true artist endures.'
+        },
+        biographyItems: [
+          {
+            id: 1,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/1/19/Nirvana_around_1992.jpg',
+            caption: 'Kurt Cobain with Nirvana'
+          },
+          {
+            id: 2,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Kurt_Cobain_1991.jpg',
+            caption: 'Nirvana performing live'
+          },
+          {
+            id: 3,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/b/b9/Kurt_Cobain_1993.jpg',
+            caption: 'Kurt Cobain - The Voice of Generation X'
+          },
+          {
+            id: 4,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/hTWKbfoikeg/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=hTWKbfoikeg',
+            caption: 'Smells Like Teen Spirit - Nirvana (Official Video)'
+          },
+          {
+            id: 5,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/vabnZ9-ex7o/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=vabnZ9-ex7o',
+            caption: 'Come As You Are - Nirvana (Official Video)'
+          },
+          {
+            id: 6,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/n6P0SitRac8/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=n6P0SitRac8',
+            caption: 'Heart-Shaped Box - Nirvana (Official Video)'
+          },
+          {
+            id: 7,
+            type: 'video',
+            imageUrl: 'https://img.youtube.com/vi/aWmkuH1k7uA/hqdefault.jpg',
+            videoUrl: 'https://www.youtube.com/watch?v=aWmkuH1k7uA',
+            caption: 'Lithium - Nirvana (Official Video)'
+          },
+          {
+            id: 8,
+            type: 'photo',
+            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/0/09/Nirvana_1991.jpg',
+            caption: 'Kurt Cobain - Musical Legacy'
           }
         ]
       }

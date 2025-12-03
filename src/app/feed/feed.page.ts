@@ -98,7 +98,7 @@ export class FeedPage implements OnInit {
       name: 'Napoleon Bonaparte',
       birthDate: '15.08.1769',
       deathDate: '05.05.1821',
-      imageUrl: 'https://via.placeholder.com/200/8B7355/FFFFFF?text=NB',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Napoleon_Bonaparte.jpg',
       message: 'Emperor of the French, military genius, and one of history\'s most influential figures',
       relationship: 'In memory, a figure who shaped European history.',
       isPublicFigure: true,
@@ -109,9 +109,31 @@ export class FeedPage implements OnInit {
       name: 'John Lennon',
       birthDate: '09.10.1940',
       deathDate: '08.12.1980',
-      imageUrl: 'https://picsum.photos/200/200?random=20',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/85/John_Lennon_1969_%28cropped%29.jpg',
       message: 'Musician, songwriter, peace activist, and co-founder of The Beatles',
       relationship: 'In memory, a voice for peace and love that continues to inspire generations.',
+      isPublicFigure: true,
+      isHistoricalFigure: true
+    },
+    {
+      id: 11,
+      name: 'Michael Jackson',
+      birthDate: '29.08.1958',
+      deathDate: '25.06.2009',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Michael_Jackson_in_1988.jpg',
+      message: 'The King of Pop, legendary performer, and one of the most influential entertainers of all time',
+      relationship: 'In memory, an icon whose music and dance continue to inspire millions worldwide.',
+      isPublicFigure: true,
+      isHistoricalFigure: true
+    },
+    {
+      id: 12,
+      name: 'Kurt Cobain',
+      birthDate: '20.02.1967',
+      deathDate: '05.04.1994',
+      imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/7/76/Kurt_Cobain_1991.jpg',
+      message: 'Singer, songwriter, and guitarist of Nirvana, voice of Generation X',
+      relationship: 'In memory, a musical genius whose raw emotion and authenticity changed rock music forever.',
       isPublicFigure: true,
       isHistoricalFigure: true
     }
