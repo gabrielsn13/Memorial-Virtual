@@ -11,21 +11,74 @@
   position: relative;
 }
 
-// Year Selector
-.year-selector-container {
+// Filtro Expandível
+.filter-container {
   position: sticky;
   top: 0;
   z-index: 10;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(25, 118, 210, 0.1);
-  padding: 12px 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.year-selector-header {
-  padding: 0 20px 12px 20px;
-  animation: slideDown 0.3s ease-out;
+.filter-header {
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  user-select: none;
+
+  &:hover {
+    background-color: rgba(25, 118, 210, 0.05);
+  }
+
+  &:active {
+    background-color: rgba(25, 118, 210, 0.1);
+  }
+}
+
+.filter-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.filter-toggle-icon {
+  font-size: 24px;
+  color: #1976D2;
+  transition: transform 0.3s ease;
+}
+
+.filter-header-text {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333333;
+  flex: 1;
+}
+
+.filter-badge {
+  background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
+  color: #FFFFFF;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  min-width: 24px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+}
+
+.filter-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  padding: 0 20px;
+
+  &.expanded {
+    max-height: 1000px;
+    padding: 0 20px 20px 20px;
+    animation: slideDown 0.3s ease-out;
+  }
 }
 
 @keyframes slideDown {
@@ -39,7 +92,27 @@
   }
 }
 
-.year-search-container {
+.filter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-top: 16px;
+}
+
+.filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 4px;
+}
+
+.filter-input-container {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -55,27 +128,13 @@
   }
 }
 
-.close-search-button {
-  --color: #666666;
-  --padding-start: 4px;
-  --padding-end: 4px;
-  margin: 0;
-  height: 32px;
-  width: 32px;
-  flex-shrink: 0;
-  
-  ion-icon {
-    font-size: 20px;
-  }
-}
-
-.search-icon {
+.filter-input-icon {
   font-size: 20px;
   color: #666666;
   flex-shrink: 0;
 }
 
-.year-search-input {
+.filter-input {
   flex: 1;
   --padding-start: 0;
   --padding-end: 0;
@@ -89,109 +148,123 @@
   }
 }
 
-.clear-button {
+.filter-clear-button {
   --color: #666666;
   --padding-start: 4px;
   --padding-end: 4px;
   margin: 0;
   height: 24px;
   width: 24px;
+  flex-shrink: 0;
   
   ion-icon {
     font-size: 20px;
   }
 }
 
-.year-selector-wrapper {
+.date-fields-container {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 12px;
+}
+
+.date-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   position: relative;
-  padding: 0 20px;
 }
 
-.year-selector-scroll {
+.date-field-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666666;
+}
+
+.datetime-input-wrapper {
   display: flex;
   align-items: center;
-  overflow-x: auto;
-  overflow-y: hidden;
-  gap: 12px;
-  flex: 1;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-  
-  // Esconder scrollbar mas manter funcionalidade
-  scrollbar-width: none; // Firefox
-  -ms-overflow-style: none; // IE/Edge
-  
-  &::-webkit-scrollbar {
-    display: none; // Chrome/Safari
-  }
+  gap: 8px;
+  position: relative;
 }
 
-.search-icon-button {
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+.datetime-input {
+  flex: 1;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid rgba(25, 118, 210, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #333333;
+  transition: border-color 0.2s;
   cursor: pointer;
-  transition: all 0.2s;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 2;
 
-  &:hover {
-    background: rgba(255, 255, 255, 1);
-    border-color: rgba(25, 118, 210, 0.4);
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  ion-icon {
-    font-size: 20px;
-    color: #1976D2;
+  &:focus-within {
+    border-color: #1976D2;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
   }
 }
 
-.year-item {
+.date-clear-button {
+  --color: #666666;
+  --padding-start: 4px;
+  --padding-end: 4px;
+  margin: 0;
+  height: 24px;
+  width: 24px;
   flex-shrink: 0;
-  padding: 10px 24px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.8);
+  
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.categories-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.9);
   border: 2px solid rgba(25, 118, 210, 0.2);
-  color: #666666;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  min-width: 80px;
-  text-align: center;
+  border-radius: 12px;
+  padding: 12px;
+}
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(25, 118, 210, 0.4);
+.category-item {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+  --min-height: 40px;
+  border: none;
+  margin: 0;
+
+  ion-label {
+    font-size: 14px;
+    color: #333333;
+    margin-left: 8px;
   }
 
-  &:active {
-    transform: scale(0.95);
+  ion-checkbox {
+    --size: 20px;
+    --checkbox-background-checked: #1976D2;
+    --border-color-checked: #1976D2;
   }
+}
 
-  &.active {
-    background: linear-gradient(135deg, #9C27B0 0%, #2196F3 100%);
-    border-color: transparent;
-    color: #FFFFFF;
-    font-weight: 600;
-    box-shadow: 0 2px 8px rgba(25, 118, 210, 0.3);
-  }
+.filter-actions {
+  margin-top: 8px;
+}
+
+.clear-filters-button {
+  --border-color: #1976D2;
+  --color: #1976D2;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
 }
 
 // Profiles List

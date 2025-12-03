@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { IonModal } from '@ionic/angular';
 
 interface MemorialProfile {
   id: number;
@@ -140,90 +141,209 @@ export class FeedPage implements OnInit {
   ];
 
   profiles: MemorialProfile[] = [];
-  availableYears: number[] = [];
-  selectedYear: number = 0;
-  searchYear: number | null = null;
-  currentYear: number = new Date().getFullYear();
-  showSearch: boolean = false;
+  maxDate: string = new Date().toISOString();
+  
+  // Filtro expandível
+  isFilterExpanded: boolean = false;
+  
+  // Filtros
+  filterText: string = '';
+  filterStartDate: string | null = null;
+  filterEndDate: string | null = null;
+  filterCategories = {
+    publicFigure: false,
+    family: false,
+    individuals: false
+  };
+
+  @ViewChild('startDateModal', { static: false }) startDateModal!: IonModal;
+  @ViewChild('endDateModal', { static: false }) endDateModal!: IonModal;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    // Extrair anos únicos das datas de morte
-    this.extractAvailableYears();
-    // Selecionar o ano mais recente por padrão
-    if (this.availableYears.length > 0) {
-      this.selectedYear = this.availableYears[0];
-      this.filterProfilesByYear(this.selectedYear);
-    }
+    // Inicializar com todos os perfis
+    this.applyFilters();
   }
 
-  extractAvailableYears() {
-    const yearsSet = new Set<number>();
-    this.allProfiles.forEach(profile => {
-      // Extrair ano da data de morte (formato: DD.MM.YYYY)
-      const year = parseInt(profile.deathDate.split('.')[2]);
-      if (!isNaN(year)) {
-        yearsSet.add(year);
-      }
-    });
+  toggleFilter() {
+    this.isFilterExpanded = !this.isFilterExpanded;
+  }
+
+  applyFilters() {
+    let filtered = [...this.allProfiles];
+
+    // Filtro por texto (nome ou mensagem)
+    if (this.filterText && this.filterText.trim()) {
+      const searchText = this.filterText.toLowerCase().trim();
+      filtered = filtered.filter(profile => 
+        profile.name.toLowerCase().includes(searchText) ||
+        profile.message.toLowerCase().includes(searchText) ||
+        profile.relationship.toLowerCase().includes(searchText)
+      );
+    }
+
+    // Filtro por período de data (data de morte)
+    if (this.filterStartDate || this.filterEndDate) {
+      filtered = filtered.filter(profile => {
+        const deathDate = this.parseDate(profile.deathDate);
+        if (!deathDate) return false;
+
+        const startDate = this.filterStartDate ? new Date(this.filterStartDate) : null;
+        const endDate = this.filterEndDate ? new Date(this.filterEndDate) : null;
+
+        if (startDate && deathDate < startDate) return false;
+        if (endDate && deathDate > endDate) return false;
+
+        return true;
+      });
+    }
+
+    // Filtro por categorias
+    const hasCategoryFilter = this.filterCategories.publicFigure || 
+                             this.filterCategories.family || 
+                             this.filterCategories.individuals;
+
+    if (hasCategoryFilter) {
+      filtered = filtered.filter(profile => {
+        // Figura pública
+        if (this.filterCategories.publicFigure && 
+            (profile.isPublicFigure || profile.isHistoricalFigure)) {
+          return true;
+        }
+
+        // Família (verifica se relationship contém palavras relacionadas a família)
+        if (this.filterCategories.family) {
+          const relationshipLower = profile.relationship.toLowerCase();
+          const familyKeywords = ['family', 'família', 'wife', 'husband', 'son', 'daughter', 
+                                 'children', 'filhos', 'filhas', 'esposa', 'esposo', 'pai', 'mãe',
+                                 'parent', 'parents', 'grandchildren', 'netos'];
+          if (familyKeywords.some(keyword => relationshipLower.includes(keyword))) {
+            return true;
+          }
+        }
+
+        // Indivíduos (não é figura pública e não é família)
+        if (this.filterCategories.individuals) {
+          const isPublic = profile.isPublicFigure || profile.isHistoricalFigure;
+          const relationshipLower = profile.relationship.toLowerCase();
+          const familyKeywords = ['family', 'família', 'wife', 'husband', 'son', 'daughter'];
+          const isFamily = familyKeywords.some(keyword => relationshipLower.includes(keyword));
+          
+          if (!isPublic && !isFamily) {
+            return true;
+          }
+        }
+
+        return false;
+      });
+    }
+
+    this.profiles = filtered;
+  }
+
+  parseDate(dateString: string): Date | null {
+    // Formato: DD.MM.YYYY
+    const parts = dateString.split('.');
+    if (parts.length !== 3) return null;
     
-    // Adicionar todos os anos de 2025 até 1821 para permitir scroll completo
-    const currentYear = new Date().getFullYear();
-    const startYear = 1821;
-    for (let year = currentYear; year >= startYear; year--) {
-      yearsSet.add(year);
-    }
+    const day = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // Mês é 0-indexed
+    const year = parseInt(parts[2], 10);
     
-    this.availableYears = Array.from(yearsSet).sort((a, b) => b - a); // Ordenar do mais recente para o mais antigo
+    if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
+    
+    return new Date(year, month, day);
   }
 
-  filterProfilesByYear(year: number) {
-    this.selectedYear = year;
-    this.profiles = this.allProfiles.filter(profile => {
-      const profileYear = parseInt(profile.deathDate.split('.')[2]);
-      return profileYear === year;
-    });
+  clearTextFilter() {
+    this.filterText = '';
+    this.applyFilters();
   }
 
-  selectYear(year: number) {
-    this.filterProfilesByYear(year);
-    this.searchYear = null; // Limpar busca ao selecionar do scroll
+  clearStartDate() {
+    this.filterStartDate = null;
+    this.applyFilters();
   }
 
-  onYearSearch() {
-    if (this.searchYear && this.searchYear >= 1821 && this.searchYear <= this.currentYear) {
-      // Verificar se o ano existe na lista
-      if (this.availableYears.includes(this.searchYear)) {
-        this.filterProfilesByYear(this.searchYear);
-        this.scrollToYear(this.searchYear);
-      } else {
-        // Se o ano não tem perfis, ainda permite selecionar para mostrar mensagem
-        this.filterProfilesByYear(this.searchYear);
-      }
+  clearEndDate() {
+    this.filterEndDate = null;
+    this.applyFilters();
+  }
+
+  clearAllFilters() {
+    this.filterText = '';
+    this.filterStartDate = null;
+    this.filterEndDate = null;
+    this.filterCategories = {
+      publicFigure: false,
+      family: false,
+      individuals: false
+    };
+    this.applyFilters();
+  }
+
+  hasActiveFilters(): boolean {
+    return !!(this.filterText && this.filterText.trim()) ||
+           !!this.filterStartDate ||
+           !!this.filterEndDate ||
+           this.filterCategories.publicFigure ||
+           this.filterCategories.family ||
+           this.filterCategories.individuals;
+  }
+
+  getActiveFiltersCount(): number {
+    let count = 0;
+    if (this.filterText && this.filterText.trim()) count++;
+    if (this.filterStartDate) count++;
+    if (this.filterEndDate) count++;
+    if (this.filterCategories.publicFigure) count++;
+    if (this.filterCategories.family) count++;
+    if (this.filterCategories.individuals) count++;
+    return count;
+  }
+
+  openStartDatePicker() {
+    if (this.startDateModal) {
+      this.startDateModal.present();
     }
   }
 
-  clearYearSearch() {
-    this.searchYear = null;
-    // Manter o ano selecionado atual
-  }
-
-  toggleSearch() {
-    this.showSearch = !this.showSearch;
-    if (!this.showSearch) {
-      this.searchYear = null;
+  openEndDatePicker() {
+    if (this.endDateModal) {
+      this.endDateModal.present();
     }
   }
 
-  scrollToYear(year: number) {
-    // Scroll suave para o ano selecionado no scroll horizontal
-    setTimeout(() => {
-      const yearElement = document.querySelector(`[data-year="${year}"]`);
-      if (yearElement) {
-        yearElement.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
-    }, 100);
+  onStartDateChange() {
+    this.applyFilters();
+    if (this.startDateModal) {
+      this.startDateModal.dismiss();
+    }
+  }
+
+  onEndDateChange() {
+    this.applyFilters();
+    if (this.endDateModal) {
+      this.endDateModal.dismiss();
+    }
+  }
+
+  formatDateForDisplay(dateString: string | null): string {
+    if (!dateString) return '';
+    
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return '';
+      
+      const day = date.getDate().toString().padStart(2, '0');
+      const month = (date.getMonth() + 1).toString().padStart(2, '0');
+      const year = date.getFullYear();
+      
+      return `${day}.${month}.${year}`;
+    } catch {
+      return '';
+    }
   }
 
   openProfile(profileId: number) {
