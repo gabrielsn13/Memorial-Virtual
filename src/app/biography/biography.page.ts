@@ -12,6 +12,21 @@ interface BiographyItem {
   caption?: string;
 }
 
+interface Comment {
+  id: number;
+  author: string;
+  text: string;
+  timestamp: Date;
+}
+
+interface ItemInteraction {
+  itemId: number;
+  liked: boolean;
+  likesCount: number;
+  comments: Comment[];
+  commentsOpen: boolean;
+}
+
 @Component({
   selector: 'app-biography',
   templateUrl: 'biography.page.html',
@@ -21,6 +36,8 @@ interface BiographyItem {
 export class BiographyPage implements OnInit {
   profileId: number = 0;
   playingVideoId: number | null = null; // ID do vídeo que está sendo reproduzido
+  itemInteractions: Map<number, ItemInteraction> = new Map();
+  newCommentText: { [key: number]: string } = {}; // Armazena texto de novo comentário por item
   
   profile = {
     id: 1,
@@ -357,6 +374,15 @@ export class BiographyPage implements OnInit {
       // Manter dados padrão para outros perfis
       // Os dados já estão definidos como padrão no componente
     }
+    
+    // Inicializar interações para todos os itens
+    this.biographyItems.forEach(item => {
+      this.initializeItemInteraction(item.id);
+    });
+    
+    // Inicializar interações para biografia (id: 0) e reflexão pessoal (id: -1)
+    this.initializeItemInteraction(0);
+    this.initializeItemInteraction(-1);
   }
 
   goBack() {
@@ -397,6 +423,93 @@ export class BiographyPage implements OnInit {
       return this.sanitizer.bypassSecurityTrustUrl('');
     }
     return this.sanitizer.bypassSecurityTrustUrl(imageUrl);
+  }
+
+  // Inicializar interações para um item
+  initializeItemInteraction(itemId: number) {
+    if (!this.itemInteractions.has(itemId)) {
+      this.itemInteractions.set(itemId, {
+        itemId: itemId,
+        liked: false,
+        likesCount: Math.floor(Math.random() * 100) + 10, // Número aleatório inicial
+        comments: [],
+        commentsOpen: false
+      });
+    }
+  }
+
+  // Obter interação de um item
+  getItemInteraction(itemId: number): ItemInteraction {
+    this.initializeItemInteraction(itemId);
+    return this.itemInteractions.get(itemId)!;
+  }
+
+  // Toggle like
+  toggleLike(itemId: number) {
+    const interaction = this.getItemInteraction(itemId);
+    if (interaction.liked) {
+      interaction.likesCount--;
+      interaction.liked = false;
+    } else {
+      interaction.likesCount++;
+      interaction.liked = true;
+    }
+  }
+
+  // Toggle comentários
+  toggleComments(itemId: number) {
+    const interaction = this.getItemInteraction(itemId);
+    interaction.commentsOpen = !interaction.commentsOpen;
+  }
+
+  // Adicionar comentário
+  addComment(itemId: number) {
+    const interaction = this.getItemInteraction(itemId);
+    const commentText = this.newCommentText[itemId]?.trim();
+    
+    if (commentText) {
+      const newComment: Comment = {
+        id: Date.now(),
+        author: 'You', // Em produção, usar usuário logado
+        text: commentText,
+        timestamp: new Date()
+      };
+      interaction.comments.push(newComment);
+      this.newCommentText[itemId] = '';
+    }
+  }
+
+  // Compartilhar
+  shareItem(item: BiographyItem) {
+    if (navigator.share) {
+      const shareData = {
+        title: item.caption || 'Memorial Item',
+        text: item.caption || '',
+        url: window.location.href
+      };
+      navigator.share(shareData).catch(err => console.log('Error sharing', err));
+    } else {
+      // Fallback: copiar para clipboard
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        alert('Link copiado para a área de transferência!');
+      });
+    }
+  }
+
+  // Formatar data do comentário
+  formatCommentDate(date: Date): string {
+    const now = new Date();
+    const diff = now.getTime() - date.getTime();
+    const minutes = Math.floor(diff / 60000);
+    const hours = Math.floor(diff / 3600000);
+    const days = Math.floor(diff / 86400000);
+
+    if (minutes < 1) return 'agora';
+    if (minutes < 60) return `${minutes}m`;
+    if (hours < 24) return `${hours}h`;
+    if (days < 7) return `${days}d`;
+    return date.toLocaleDateString('pt-BR');
   }
 }
 

@@ -194,6 +194,10 @@
 // Biography Card
 .biography-card {
   padding: 24px;
+  
+  .interaction-buttons {
+    margin-top: 16px;
+  }
 }
 
 .biography-title {
@@ -233,6 +237,10 @@
   background: transparent;
   box-shadow: none;
   padding: 16px 24px;
+  
+  .interaction-buttons {
+    margin-top: 16px;
+  }
 }
 
 .reflection-author {
@@ -365,6 +373,173 @@
   line-height: 1.5;
 }
 
+// Interaction Buttons
+.interaction-buttons {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 24px;
+  border-top: 1px solid #F0F0F0;
+}
+
+.interaction-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.2s, transform 0.1s;
+  color: #666666;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #F5F5F5;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.active {
+    color: #E91E63;
+    
+    .interaction-icon {
+      color: #E91E63;
+    }
+  }
+}
+
+.interaction-icon {
+  font-size: 24px;
+  color: #666666;
+  transition: color 0.2s;
+}
+
+.interaction-count {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.like-btn.active .interaction-icon {
+  color: #E91E63;
+  animation: heartBeat 0.3s ease-in-out;
+}
+
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+// Comments Section
+.comments-section {
+  border-top: 1px solid #F0F0F0;
+  padding: 16px 24px;
+  background: #FAFAFA;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 500px;
+  }
+}
+
+.comments-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-bottom: 16px;
+}
+
+.comment-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 0;
+  border-bottom: 1px solid #F0F0F0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.comment-content {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.comment-author {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333333;
+  min-width: 60px;
+}
+
+.comment-text {
+  font-size: 14px;
+  color: #666666;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.comment-time {
+  font-size: 12px;
+  color: #999999;
+  margin-left: 68px;
+  margin-top: 4px;
+}
+
+.no-comments {
+  padding: 24px 0;
+  text-align: center;
+  
+  p {
+    font-size: 14px;
+    color: #999999;
+    margin: 0;
+  }
+}
+
+.add-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.comment-input {
+  --background: #FFFFFF;
+  --color: #333333;
+  --padding-start: 12px;
+  --padding-end: 12px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.post-comment-btn {
+  align-self: flex-end;
+  --color: #1976D2;
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  
+  &[disabled] {
+    --color: #CCCCCC;
+    opacity: 0.5;
+  }
+}
+
 // Responsividade
 @media (max-width: 480px) {
   .timeline-wrapper {
@@ -410,6 +585,41 @@
 
   .play-icon {
     font-size: 28px;
+  }
+
+  .interaction-buttons {
+    padding: 10px 16px;
+    gap: 12px;
+  }
+
+  .interaction-icon {
+    font-size: 20px;
+  }
+
+  .interaction-count {
+    font-size: 13px;
+  }
+
+  .comments-section {
+    padding: 12px 16px;
+  }
+
+  .comment-item {
+    padding: 10px 0;
+  }
+
+  .comment-author {
+    font-size: 13px;
+    min-width: 50px;
+  }
+
+  .comment-text {
+    font-size: 13px;
+  }
+
+  .comment-time {
+    font-size: 11px;
+    margin-left: 58px;
   }
 }
 
