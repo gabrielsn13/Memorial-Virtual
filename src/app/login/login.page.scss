@@ -426,3 +426,47 @@
   }
 }
 
+// PrimeNG DatePicker Styles
+::ng-deep {
+  .p-datepicker-calendar-container {
+    background: #E3F2FD !important;
+    border-radius: 8px;
+    padding: 8px;
+  }
+  
+  .p-datepicker {
+    background: #E3F2FD !important;
+    border: 1px solid rgba(25, 118, 210, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
+  }
+  
+  .p-datepicker-header {
+    background: #E3F2FD !important;
+    border-bottom: 1px solid rgba(25, 118, 210, 0.2);
+  }
+  
+  .p-datepicker-calendar {
+    background: #E3F2FD !important;
+  }
+  
+  .p-datepicker-table {
+    background: #E3F2FD !important;
+  }
+  
+  .p-datepicker-today > span {
+    background: #BBDEFB !important;
+    color: #1976D2 !important;
+    font-weight: 600;
+  }
+  
+  .p-datepicker-day:not(.p-disabled):not(.p-highlight):hover {
+    background: #BBDEFB !important;
+  }
+  
+  .p-datepicker-day.p-highlight {
+    background: #1976D2 !important;
+    color: #FFFFFF !important;
+  }
+}
+
