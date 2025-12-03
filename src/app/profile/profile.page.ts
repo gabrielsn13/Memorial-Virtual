@@ -23,7 +23,7 @@ export class ProfilePage implements OnInit {
     profileImage: 'https://via.placeholder.com/150/FFB6C1/FFFFFF?text=You'
   };
 
-  mementos: any[] = [];
+  timeline: any[] = [];
   selectedFiles: File[] = [];
   maxDate: Date = new Date();
 
@@ -56,7 +56,7 @@ export class ProfilePage implements OnInit {
         reader.readAsDataURL(file);
       }
       
-      // Processar múltiplos arquivos para mementos
+      // Processar múltiplos arquivos para timeline
       for (let i = 0; i < files.length; i++) {
         const fileItem = files[i];
         if (fileItem.type.startsWith('image/') || fileItem.type.startsWith('video/')) {
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
           const reader = new FileReader();
           reader.onload = (e: ProgressEvent<FileReader>) => {
             if (e.target && e.target.result) {
-              this.mementos.push({
+              this.timeline.push({
                 id: Date.now() + i,
                 type: fileItem.type.startsWith('video/') ? 'video' : 'image',
                 url: e.target.result as string,
@@ -86,9 +86,9 @@ export class ProfilePage implements OnInit {
   }
 
   removeMemento(id: number) {
-    const mementoIndex = this.mementos.findIndex(m => m.id === id);
+    const mementoIndex = this.timeline.findIndex(m => m.id === id);
     if (mementoIndex !== -1) {
-      this.mementos.splice(mementoIndex, 1);
+      this.timeline.splice(mementoIndex, 1);
       this.selectedFiles.splice(mementoIndex, 1);
     }
   }

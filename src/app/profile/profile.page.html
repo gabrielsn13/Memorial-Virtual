@@ -41,10 +41,10 @@
       </div>
       <div 
         class="tab-item"
-        [class.active]="activeTab === 'mementos'"
-        (click)="selectTab('mementos')">
+        [class.active]="activeTab === 'timeline'"
+        (click)="selectTab('timeline')">
         <ion-icon name="images-outline"></ion-icon>
-        <span>Mementos</span>
+        <span>timeline</span>
       </div>
       <div 
         class="tab-item"
@@ -130,9 +130,9 @@
           </ion-button>
         </div>
 
-        <!-- Mementos Tab -->
-        <div class="tab-content" *ngIf="activeTab === 'mementos'">
-          <h3 class="section-title">Mementos</h3>
+        <!-- timeline Tab -->
+        <div class="tab-content" *ngIf="activeTab === 'timeline'">
+          <h3 class="section-title">timeline</h3>
           
           <div class="upload-section">
             <input 
@@ -151,9 +151,9 @@
             </ion-button>
           </div>
 
-          <div class="mementos-grid">
+          <div class="timeline-grid">
             <div 
-              *ngFor="let memento of mementos" 
+              *ngFor="let memento of timeline" 
               class="memento-item"
               [class.video-item]="memento.type === 'video'">
               <img 
@@ -175,8 +175,8 @@
             </div>
             
             <!-- Placeholder for more items -->
-            <div class="memento-item placeholder" *ngIf="mementos.length < 9">
-              <span>+{{ 9 - mementos.length }}</span>
+            <div class="memento-item placeholder" *ngIf="timeline.length < 9">
+              <span>+{{ 9 - timeline.length }}</span>
             </div>
           </div>
         </div>
@@ -207,10 +207,10 @@
       <!-- Sidebar -->
       <div class="profile-sidebar">
         <div class="sidebar-section">
-          <h3 class="sidebar-title">Mementos</h3>
-          <div class="sidebar-mementos">
+          <h3 class="sidebar-title">timeline</h3>
+          <div class="sidebar-timeline">
             <div 
-              *ngFor="let memento of mementos.slice(0, 9)" 
+              *ngFor="let memento of timeline.slice(0, 9)" 
               class="sidebar-memento">
               <img 
                 *ngIf="memento.type === 'image'"
@@ -224,8 +224,8 @@
                 <ion-icon name="play" class="sidebar-play-icon"></ion-icon>
               </div>
             </div>
-            <div class="sidebar-memento placeholder" *ngIf="mementos.length < 9">
-              <span>+{{ 9 - mementos.length }}</span>
+            <div class="sidebar-memento placeholder" *ngIf="timeline.length < 9">
+              <span>+{{ 9 - timeline.length }}</span>
             </div>
           </div>
         </div>
