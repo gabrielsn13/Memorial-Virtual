@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonModal } from '@ionic/angular';
+import { IonModal, ModalController } from '@ionic/angular';
 
 interface MemorialProfile {
   id: number;
@@ -12,6 +12,12 @@ interface MemorialProfile {
   relationship: string;
   isPublicFigure?: boolean;
   isHistoricalFigure?: boolean;
+  // Novos campos para posts
+  createdAt: Date;
+  likesCount: number;
+  isLiked: boolean;
+  commentsCount: number;
+  isSaved: boolean;
 }
 
 @Component({
@@ -29,7 +35,12 @@ export class FeedPage implements OnInit {
       deathDate: '07.09.2019',
       imageUrl: 'https://via.placeholder.com/200/FFB6C1/FFFFFF?text=ME',
       message: 'She made every Sunday taste like home',
-      relationship: 'In memory, son, daughter, wife.'
+      relationship: 'In memory, son, daughter, wife.',
+      createdAt: new Date(Date.now() - 2 * 60 * 1000), // 2 minutos atrás
+      likesCount: 24,
+      isLiked: false,
+      commentsCount: 5,
+      isSaved: false
     },
     {
       id: 2,
@@ -38,7 +49,12 @@ export class FeedPage implements OnInit {
       deathDate: '15.03.2020',
       imageUrl: 'https://via.placeholder.com/200/87CEEB/FFFFFF?text=JS',
       message: 'A life well lived, a heart well loved',
-      relationship: 'In memory, family and friends.'
+      relationship: 'In memory, family and friends.',
+      createdAt: new Date(Date.now() - 1 * 60 * 60 * 1000), // 1 hora atrás
+      likesCount: 156,
+      isLiked: true,
+      commentsCount: 23,
+      isSaved: true
     },
     {
       id: 3,
@@ -47,7 +63,12 @@ export class FeedPage implements OnInit {
       deathDate: '22.08.2021',
       imageUrl: 'https://via.placeholder.com/200/DDA0DD/FFFFFF?text=MS',
       message: 'Her kindness touched everyone she met',
-      relationship: 'In memory, children and grandchildren.'
+      relationship: 'In memory, children and grandchildren.',
+      createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 dias atrás
+      likesCount: 89,
+      isLiked: false,
+      commentsCount: 12,
+      isSaved: false
     },
     {
       id: 4,
@@ -56,7 +77,12 @@ export class FeedPage implements OnInit {
       deathDate: '11.11.2022',
       imageUrl: 'https://via.placeholder.com/200/98D8C8/FFFFFF?text=RJ',
       message: 'Forever in our hearts, always remembered',
-      relationship: 'In memory, wife and family.'
+      relationship: 'In memory, wife and family.',
+      createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 1 semana atrás
+      likesCount: 342,
+      isLiked: true,
+      commentsCount: 45,
+      isSaved: true
     },
     {
       id: 5,
@@ -65,7 +91,12 @@ export class FeedPage implements OnInit {
       deathDate: '03.06.2023',
       imageUrl: 'https://via.placeholder.com/200/F0E68C/FFFFFF?text=AW',
       message: 'A beautiful soul who brought joy to all',
-      relationship: 'In memory, loved ones.'
+      relationship: 'In memory, loved ones.',
+      createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 1 mês atrás
+      likesCount: 567,
+      isLiked: false,
+      commentsCount: 78,
+      isSaved: false
     },
     {
       id: 6,
@@ -74,7 +105,12 @@ export class FeedPage implements OnInit {
       deathDate: '15.01.2025',
       imageUrl: 'https://via.placeholder.com/200/A8E6CF/FFFFFF?text=DT',
       message: 'A loving father and devoted friend',
-      relationship: 'In memory, wife, children, and family.'
+      relationship: 'In memory, wife, children, and family.',
+      createdAt: new Date(Date.now() - 5 * 60 * 1000), // 5 minutos atrás
+      likesCount: 12,
+      isLiked: false,
+      commentsCount: 2,
+      isSaved: false
     },
     {
       id: 7,
@@ -83,7 +119,12 @@ export class FeedPage implements OnInit {
       deathDate: '22.04.2025',
       imageUrl: 'https://via.placeholder.com/200/FFD3A5/FFFFFF?text=SM',
       message: 'Her smile lit up every room she entered',
-      relationship: 'In memory, husband, children, and friends.'
+      relationship: 'In memory, husband, children, and friends.',
+      createdAt: new Date(), // Agora mesmo
+      likesCount: 0,
+      isLiked: false,
+      commentsCount: 0,
+      isSaved: false
     },
     {
       id: 8,
@@ -92,7 +133,12 @@ export class FeedPage implements OnInit {
       deathDate: '10.08.2025',
       imageUrl: 'https://via.placeholder.com/200/C7CEEA/FFFFFF?text=JW',
       message: 'A man of integrity, wisdom, and kindness',
-      relationship: 'In memory, family and community.'
+      relationship: 'In memory, family and community.',
+      createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 horas atrás
+      likesCount: 234,
+      isLiked: true,
+      commentsCount: 34,
+      isSaved: true
     },
     {
       id: 9,
@@ -103,7 +149,12 @@ export class FeedPage implements OnInit {
       message: 'Emperor of the French, military genius, and one of history\'s most influential figures',
       relationship: 'In memory, a figure who shaped European history.',
       isPublicFigure: true,
-      isHistoricalFigure: true
+      isHistoricalFigure: true,
+      createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 dia atrás
+      likesCount: 1234,
+      isLiked: true,
+      commentsCount: 156,
+      isSaved: true
     },
     {
       id: 10,
@@ -114,7 +165,12 @@ export class FeedPage implements OnInit {
       message: 'Musician, songwriter, peace activist, and co-founder of The Beatles',
       relationship: 'In memory, a voice for peace and love that continues to inspire generations.',
       isPublicFigure: true,
-      isHistoricalFigure: true
+      isHistoricalFigure: true,
+      createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 dias atrás
+      likesCount: 2345,
+      isLiked: true,
+      commentsCount: 289,
+      isSaved: true
     },
     {
       id: 11,
@@ -125,7 +181,12 @@ export class FeedPage implements OnInit {
       message: 'The King of Pop, legendary performer, and one of the most influential entertainers of all time',
       relationship: 'In memory, an icon whose music and dance continue to inspire millions worldwide.',
       isPublicFigure: true,
-      isHistoricalFigure: true
+      isHistoricalFigure: true,
+      createdAt: new Date(Date.now() - 6 * 24 * 60 * 60 * 1000), // 6 dias atrás
+      likesCount: 4567,
+      isLiked: false,
+      commentsCount: 567,
+      isSaved: true
     },
     {
       id: 12,
@@ -136,7 +197,12 @@ export class FeedPage implements OnInit {
       message: 'Singer, songwriter, and guitarist of Nirvana, voice of Generation X',
       relationship: 'In memory, a musical genius whose raw emotion and authenticity changed rock music forever.',
       isPublicFigure: true,
-      isHistoricalFigure: true
+      isHistoricalFigure: true,
+      createdAt: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000), // 10 dias atrás
+      likesCount: 3456,
+      isLiked: true,
+      commentsCount: 412,
+      isSaved: false
     }
   ];
 
@@ -159,7 +225,10 @@ export class FeedPage implements OnInit {
   @ViewChild('startDateModal', { static: false }) startDateModal!: IonModal;
   @ViewChild('endDateModal', { static: false }) endDateModal!: IonModal;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private modalController: ModalController
+  ) {}
 
   ngOnInit() {
     // Inicializar com todos os perfis
@@ -373,6 +442,78 @@ export class FeedPage implements OnInit {
     
     // Redirecionar para a tela home
     this.router.navigate(['/']);
+  }
+
+  // ============================================
+  // FUNÇÕES DE POST (Like, Comentários, Favorito)
+  // ============================================
+
+  /**
+   * Calcula o tempo relativo desde a postagem (estilo Instagram)
+   */
+  getTimeAgo(createdAt: Date): string {
+    const now = new Date();
+    const diffMs = now.getTime() - createdAt.getTime();
+    const diffSeconds = Math.floor(diffMs / 1000);
+    const diffMinutes = Math.floor(diffSeconds / 60);
+    const diffHours = Math.floor(diffMinutes / 60);
+    const diffDays = Math.floor(diffHours / 24);
+    const diffWeeks = Math.floor(diffDays / 7);
+    const diffMonths = Math.floor(diffDays / 30);
+
+    if (diffSeconds < 60) {
+      return 'Agora mesmo';
+    } else if (diffMinutes < 60) {
+      return `Há ${diffMinutes} min`;
+    } else if (diffHours < 24) {
+      return `Há ${diffHours} h`;
+    } else if (diffDays < 7) {
+      return `Há ${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}`;
+    } else if (diffWeeks < 4) {
+      return `Há ${diffWeeks} ${diffWeeks === 1 ? 'semana' : 'semanas'}`;
+    } else if (diffMonths < 12) {
+      return `Há ${diffMonths} ${diffMonths === 1 ? 'mês' : 'meses'}`;
+    } else {
+      return createdAt.toLocaleDateString('pt-BR');
+    }
+  }
+
+  /**
+   * Alterna o like do post
+   */
+  toggleLike(profile: MemorialProfile) {
+    profile.isLiked = !profile.isLiked;
+    if (profile.isLiked) {
+      profile.likesCount++;
+    } else {
+      profile.likesCount = Math.max(0, profile.likesCount - 1);
+    }
+  }
+
+  /**
+   * Alterna o favorito do post
+   */
+  toggleSave(profile: MemorialProfile) {
+    profile.isSaved = !profile.isSaved;
+  }
+
+  /**
+   * Abre modal de comentários
+   */
+  async openComments(profile: MemorialProfile) {
+    // Por enquanto, apenas mostra um alerta
+    // Você pode criar um componente de modal de comentários depois
+    const modal = await this.modalController.create({
+      component: null, // Criar componente de comentários depois
+      componentProps: {
+        profile: profile
+      },
+      cssClass: 'comments-modal'
+    });
+
+    // Por enquanto, apenas log
+    console.log('Abrir comentários para:', profile.name);
+    // await modal.present();
   }
 }
 
