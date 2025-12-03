@@ -201,7 +201,7 @@
       <div class="timeline-item" *ngFor="let item of biographyItems">
         <div class="timeline-marker"></div>
         <div class="timeline-content media-card">
-          <div class="media-container">
+          <div class="media-container" [ngClass]="{'photo-container': item.type === 'photo', 'video-container-wrapper': item.type === 'video'}">
             <img 
               *ngIf="item.type === 'photo'" 
               [src]="getSafeImageUrl(item.imageUrl)" 
