@@ -316,14 +316,12 @@ export class FeedPage implements OnInit {
   }
 
   onStartDateChange() {
-    this.applyFilters();
     if (this.startDateModal) {
       this.startDateModal.dismiss();
     }
   }
 
   onEndDateChange() {
-    this.applyFilters();
     if (this.endDateModal) {
       this.endDateModal.dismiss();
     }
