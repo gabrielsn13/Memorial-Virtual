@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 interface BiographyItem {
   id: number;
@@ -65,7 +66,8 @@ export class BiographyPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
@@ -228,16 +230,17 @@ export class BiographyPage implements OnInit {
     }
   }
 
-  getYouTubeEmbedUrl(videoUrl: string): string {
+  getYouTubeEmbedUrl(videoUrl: string): SafeResourceUrl {
     // Extrair o ID do vídeo do YouTube da URL
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = videoUrl.match(regExp);
     const videoId = (match && match[2].length === 11) ? match[2] : null;
     
     if (videoId) {
-      return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      return this.sanitizer.bypassSecurityTrustResourceUrl(embedUrl);
     }
-    return '';
+    return this.sanitizer.bypassSecurityTrustResourceUrl('');
   }
 
   isVideoPlaying(itemId: number): boolean {
