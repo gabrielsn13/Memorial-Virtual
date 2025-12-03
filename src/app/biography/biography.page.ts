@@ -102,13 +102,13 @@ export class BiographyPage implements OnInit {
           {
             id: 1,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/3/31/Napoleon_Bonaparte.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=10',
             caption: 'Napoleon Bonaparte in his prime'
           },
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Jacques-Louis_David_-_The_Emperor_Napoleon_in_His_Study_at_the_Tuileries_-_Google_Art_Project.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=11',
             caption: 'Emperor Napoleon in his study'
           },
           {
@@ -141,19 +141,19 @@ export class BiographyPage implements OnInit {
           {
             id: 1,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/85/John_Lennon_1969_%28cropped%29.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=1',
             caption: 'John Lennon in 1969'
           },
           {
             id: 2,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/d/dd/Beatles_White_Album.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=2',
             caption: 'The Beatles - White Album era'
           },
           {
             id: 3,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/John_Lennon_1964.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=3',
             caption: 'John Lennon with The Beatles in 1964'
           },
           {
@@ -187,7 +187,7 @@ export class BiographyPage implements OnInit {
           {
             id: 7,
             type: 'photo',
-            imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/John_Lennon_and_Yoko_Ono_1978.jpg',
+            imageUrl: 'https://picsum.photos/800/600?random=7',
             caption: 'John Lennon and Yoko Ono, 1978'
           }
         ]
