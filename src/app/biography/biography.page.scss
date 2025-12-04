@@ -17,8 +17,9 @@
   justify-content: center;
   gap: 12px;
   padding: 16px 24px;
+  padding-top: calc(16px + env(safe-area-inset-top)); // Respeitar safe area superior
   position: sticky;
-  top: 0;
+  top: 0; // O safe area já é aplicado pelo padding-top
   z-index: 10;
   background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(10px);

@@ -1,0 +1,17 @@
+// App Component Styles
+// Garantir que o app respeite safe areas
+
+ion-app {
+  // Garantir que não haja overflow que cubra a status bar
+  overflow: visible;
+  // Safe area já aplicado no global.scss
+}
+
+ion-router-outlet {
+  // Garantir que o router outlet respeite safe areas
+  display: block;
+  width: 100%;
+  height: 100%;
+  // Safe area já aplicado no global.scss
+}
+
