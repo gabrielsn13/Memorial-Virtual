@@ -43,40 +43,76 @@
    Safe Area Support - Status Bar Visibility
    ============================================ */
 
-// Variáveis CSS para uso em componentes
+// Variáveis CSS para uso em componentes (com fallback para iOS antigo)
 :root {
-  --ion-safe-area-top: env(safe-area-inset-top);
-  --ion-safe-area-bottom: env(safe-area-inset-bottom);
-  --ion-safe-area-left: env(safe-area-inset-left);
-  --ion-safe-area-right: env(safe-area-inset-right);
+  --ion-safe-area-top: env(safe-area-inset-top, constant(safe-area-inset-top));
+  --ion-safe-area-bottom: env(safe-area-inset-bottom, constant(safe-area-inset-bottom));
+  --ion-safe-area-left: env(safe-area-inset-left, constant(safe-area-inset-left));
+  --ion-safe-area-right: env(safe-area-inset-right, constant(safe-area-inset-right));
 }
 
-// Garantir que ion-app respeite safe areas
-// O Ionic já aplica isso automaticamente, mas garantimos aqui também
+// FORÇAR que ion-app respeite safe areas - CRÍTICO
 ion-app {
-  // O Ionic framework já gerencia isso, mas garantimos que não haja overflow
+  // Garantir que o app nunca ultrapasse a status bar
+  padding-top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
+  padding-bottom: env(safe-area-inset-bottom, constant(safe-area-inset-bottom)) !important;
+  padding-left: env(safe-area-inset-left, constant(safe-area-inset-left)) !important;
+  padding-right: env(safe-area-inset-right, constant(safe-area-inset-right)) !important;
   overflow: visible;
+  // Garantir que não haja elementos absolutos/fixos invadindo
+  position: relative;
 }
 
-// Garantir que ion-content respeite safe areas
+// FORÇAR que ion-content respeite safe areas
 ion-content {
-  // O Ionic já aplica safe area automaticamente via CSS variables
-  // Mas garantimos que os valores estejam corretos
-  --padding-top: var(--ion-safe-area-top, env(safe-area-inset-top));
-  --padding-bottom: var(--ion-safe-area-bottom, env(safe-area-inset-bottom));
-  --padding-start: var(--ion-safe-area-left, env(safe-area-inset-left));
-  --padding-end: var(--ion-safe-area-right, env(safe-area-inset-right));
+  // Aplicar safe area explicitamente
+  --padding-top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
+  --padding-bottom: env(safe-area-inset-bottom, constant(safe-area-inset-bottom)) !important;
+  --padding-start: env(safe-area-inset-left, constant(safe-area-inset-left)) !important;
+  --padding-end: env(safe-area-inset-right, constant(safe-area-inset-right)) !important;
+  // Garantir que o conteúdo nunca ultrapasse
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-// Garantir que ion-header respeite safe area no topo
+// FORÇAR que ion-header respeite safe area no topo - CRÍTICO
 ion-header {
-  // O Ionic já aplica safe area automaticamente
-  // Mas garantimos que o header não cubra a status bar
-  padding-top: env(safe-area-inset-top);
+  // Garantir que o header SEMPRE fique abaixo da status bar
+  padding-top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
+  margin-top: 0 !important;
+  top: 0 !important;
+  position: relative !important; // Evitar position fixed que invada
   
   ion-toolbar {
-    // O toolbar já tem seu próprio padding
     padding-top: 0;
+    margin-top: 0;
+  }
+}
+
+// Prevenir que qualquer elemento com position fixed/absolute invada a status bar
+[style*="position: fixed"],
+[style*="position: absolute"] {
+  &[style*="top: 0"],
+  &[style*="top:0"] {
+    top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
+  }
+}
+
+// Garantir que elementos com position sticky respeitem safe area
+[style*="position: sticky"] {
+  &[style*="top: 0"],
+  &[style*="top:0"] {
+    top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
+  }
+}
+
+// Regra específica para barras de pesquisa fixas no topo
+.filter-container[style*="position: fixed"],
+.filter-container {
+  &[style*="top: 0"],
+  &[style*="top:0"] {
+    // Garantir que sempre respeite safe area
+    padding-top: env(safe-area-inset-top, constant(safe-area-inset-top)) !important;
   }
 }
 

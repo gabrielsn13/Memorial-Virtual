@@ -2,11 +2,15 @@
   --background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
   position: relative;
   overflow-y: auto;
+  // Não precisamos mais de padding-top aqui, a barra fixa já compensa
 }
 
 .feed-container {
-  min-height: 100vh;
-  padding-bottom: 80px; // Espaço para a barra de navegação
+  // Usar calc para garantir que não ultrapasse a viewport
+  // Adicionar padding-top para compensar a altura da barra de pesquisa fixa
+  padding-top: calc(56px + env(safe-area-inset-top, constant(safe-area-inset-top))); // Altura aproximada da barra + safe area
+  min-height: calc(100vh - env(safe-area-inset-top, constant(safe-area-inset-top)) - env(safe-area-inset-bottom, constant(safe-area-inset-bottom)));
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, constant(safe-area-inset-bottom))); // Espaço para a barra de navegação + safe area
   background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
   position: relative;
 }
@@ -37,16 +41,22 @@
   }
 }
 
-// Filtro Expandível
+// Filtro Expandível - FIXO NO TOPO
 .filter-container {
-  position: sticky;
-  top: 0; // O top: 0 já funciona com o padding do ion-app
-  z-index: 10;
+  position: fixed;
+  // CRÍTICO: Garantir que o filtro fique abaixo da status bar
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000; // Z-index alto para ficar acima de tudo
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid rgba(25, 118, 210, 0.1);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  // O safe area já é aplicado pelo ion-app, não precisamos adicionar aqui
+  // CRÍTICO: Adicionar padding-top com safe area para não cobrir a status bar
+  padding-top: env(safe-area-inset-top, constant(safe-area-inset-top));
+  // Garantir que funcione em todos os dispositivos
+  width: 100%;
 }
 
 .filter-header {
@@ -54,6 +64,10 @@
   cursor: pointer;
   transition: background-color 0.2s;
   user-select: none;
+  // Garantir que o header tenha altura consistente
+  min-height: 56px;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: rgba(25, 118, 210, 0.05);
@@ -100,6 +114,9 @@
   overflow: hidden;
   transition: max-height 0.3s ease-out, padding 0.3s ease-out;
   padding: 0 20px;
+  // Garantir que o conteúdo expandido também respeite safe area
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
 
   &.expanded {
     max-height: 1000px;

@@ -2,10 +2,13 @@
   --background: #FFFFFF;
   position: relative;
   overflow-y: auto;
+  // Garantir que o conteúdo respeite safe area
+  padding-top: env(safe-area-inset-top, constant(safe-area-inset-top));
 }
 
 .profile-container {
-  min-height: 100vh;
+  // Usar calc para garantir que não ultrapasse a viewport
+  min-height: calc(100vh - env(safe-area-inset-top, constant(safe-area-inset-top)) - env(safe-area-inset-bottom, constant(safe-area-inset-bottom)));
   background: #FFFFFF;
 }
 
@@ -13,8 +16,11 @@
 .profile-header {
   background: #2C2C2C;
   padding: 16px 24px;
+  // CRÍTICO: Garantir que o header fique abaixo da status bar
+  padding-top: calc(16px + env(safe-area-inset-top, constant(safe-area-inset-top)));
   position: sticky;
-  top: 0;
+  // CRÍTICO: top deve respeitar safe area
+  top: env(safe-area-inset-top, constant(safe-area-inset-top));
   z-index: 100;
 }
 

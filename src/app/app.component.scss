@@ -4,7 +4,10 @@
 ion-app {
   // Garantir que não haja overflow que cubra a status bar
   overflow: visible;
-  // Safe area já aplicado no global.scss
+  // Safe area aplicado no global.scss com !important
+  // Garantir que o app nunca ultrapasse
+  min-height: 100vh;
+  min-height: calc(100vh - env(safe-area-inset-top, constant(safe-area-inset-top)) - env(safe-area-inset-bottom, constant(safe-area-inset-bottom)));
 }
 
 ion-router-outlet {
@@ -12,6 +15,9 @@ ion-router-outlet {
   display: block;
   width: 100%;
   height: 100%;
-  // Safe area já aplicado no global.scss
+  // Garantir que não ultrapasse a status bar
+  padding-top: 0;
+  margin-top: 0;
+  position: relative;
 }
 
