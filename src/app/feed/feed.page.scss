@@ -609,31 +609,34 @@
 @media (max-width: 480px) {
   // Ajustar barra de pesquisa para área azul em mobile
   .filter-container {
-    // Remover background branco e integrar com área azul
-    background: white;
+    // Background sólido azul claro para combinar com área azul
+    background: #BBDEFB;
     backdrop-filter: none;
     border-bottom: none;
     box-shadow: none;
-    // Ajustar posicionamento para ficar dentro da área azul
-    padding-top: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 0px);
+    // Remover padding-top para eliminar espaço branco - área azul começa no topo
+    padding-top: 0;
+    // Ajustar top para começar exatamente no topo (apenas safe area se necessário)
+    top: 0;
   }
 
   .filter-header {
     // Limitar à área azul - ajustar padding e margens
-    padding: 12px 16px;
-    margin: 0 auto;
+    // Adicionar padding-top apenas para safe area, sem espaço extra
+    padding: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 12px) 16px 12px 16px;
+    margin: 0;
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
-    // Background transparente para se integrar com área azul
-    background: transparent;
+    // Background sólido azul claro
+    background: #BBDEFB;
     
     &:hover {
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: #A5D5F7;
     }
 
     &:active {
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: #90CBF5;
     }
   }
 
@@ -656,7 +659,7 @@
 
   .filter-content {
     padding: 0 16px;
-    background: transparent;
+    background: #BBDEFB;
     backdrop-filter: none;
 
     &.expanded {
@@ -664,21 +667,31 @@
     }
   }
 
-  // Ajustar padding do container para que área azul comece logo após safe area
+  // Ajustar padding do container para que área azul comece no topo
   .feed-container {
-    padding-top: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 56px); // Safe area + altura da barra
+    // Remover padding-top para que área azul comece exatamente no topo
+    padding-top: 0;
+    // A área azul começa no topo, então não precisa de compensação
+    min-height: calc(100vh - env(safe-area-inset-bottom, constant(safe-area-inset-bottom)));
   }
 
   .profiles-list {
     padding: 20px 16px;
     gap: 24px;
   }
+
+  // Garantir que feed-content não tenha padding-top em mobile
+  .feed-content {
+    padding-top: 0;
+    // Sobrescrever padding-top do ion-content para remover espaço branco
+    --padding-top: 0 !important;
+  }
 }
 
 // Ajustes para telas muito pequenas (360px e menores)
 @media (max-width: 360px) {
   .filter-header {
-    padding: 10px 12px;
+    padding: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 10px) 12px 10px 12px;
   }
 
   .filter-header-content {
@@ -705,7 +718,7 @@
 // Ajustes para telas extremamente pequenas (320px)
 @media (max-width: 320px) {
   .filter-header {
-    padding: 8px 10px;
+    padding: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 8px) 10px 8px 10px;
     min-height: 48px;
   }
 
