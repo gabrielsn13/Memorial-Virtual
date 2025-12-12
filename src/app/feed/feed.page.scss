@@ -2,7 +2,11 @@
   --background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
   position: relative;
   overflow-y: auto;
+  overflow-x: hidden;
   // Não precisamos mais de padding-top aqui, a barra fixa já compensa
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .feed-container {
@@ -13,6 +17,9 @@
   padding-bottom: calc(80px + env(safe-area-inset-bottom, constant(safe-area-inset-bottom))); // Espaço para a barra de navegação + safe area
   background: linear-gradient(180deg, #BBDEFB 0%, #E3F2FD 25%, #F5F9FF 45%, #E3F2FD 65%, #BBDEFB 100%);
   position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 
@@ -57,6 +64,7 @@
   padding-top: env(safe-area-inset-top, constant(safe-area-inset-top));
   // Garantir que funcione em todos os dispositivos
   width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-header {
@@ -68,6 +76,9 @@
   min-height: 56px;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 
   &:hover {
     background-color: rgba(25, 118, 210, 0.05);
@@ -82,6 +93,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .filter-toggle-icon {
@@ -593,63 +607,124 @@
 
 // Responsividade
 @media (max-width: 480px) {
+  // Ajustar barra de pesquisa para área azul em mobile
+  .filter-container {
+    // Remover background branco e integrar com área azul
+    background: white;
+    backdrop-filter: none;
+    border-bottom: none;
+    box-shadow: none;
+    // Ajustar posicionamento para ficar dentro da área azul
+    padding-top: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 0px);
+  }
+
+  .filter-header {
+    // Limitar à área azul - ajustar padding e margens
+    padding: 12px 16px;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    // Background transparente para se integrar com área azul
+    background: transparent;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+
+  .filter-header-content {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  .filter-input-icon {
+    font-size: 18px;
+    color: #1976D2;
+  }
+
+  .filter-toggle-icon {
+    font-size: 20px;
+  }
+
+  .filter-content {
+    padding: 0 16px;
+    background: transparent;
+    backdrop-filter: none;
+
+    &.expanded {
+      padding: 0 16px 16px 16px;
+    }
+  }
+
+  // Ajustar padding do container para que área azul comece logo após safe area
+  .feed-container {
+    padding-top: calc(env(safe-area-inset-top, constant(safe-area-inset-top)) + 56px); // Safe area + altura da barra
+  }
+
   .profiles-list {
     padding: 20px 16px;
     gap: 24px;
   }
+}
 
-  .profile-card {
-    padding: 24px 20px;
-  }
-
-  .profile-image-container {
-    width: 160px;
-    height: 160px;
-  }
-
-  .profile-name {
-    font-size: 24px;
-  }
-
-  .public-figure-badge {
-    padding: 5px 10px;
-    
-    .badge-icon {
-      font-size: 14px;
-    }
-    
-    .badge-text {
-      font-size: 11px;
-    }
-  }
-
-  .date-box {
-    min-width: 120px;
+// Ajustes para telas muito pequenas (360px e menores)
+@media (max-width: 360px) {
+  .filter-header {
     padding: 10px 12px;
   }
 
-  .message-text {
+  .filter-header-content {
+    gap: 8px;
+  }
+
+  .filter-input-icon {
     font-size: 16px;
   }
 
-  .action-group {
-    gap: 16px;
+  .filter-toggle-icon {
+    font-size: 18px;
   }
 
-  .action-btn {
-    padding: 6px;
+  .filter-content {
+    padding: 0 12px;
 
-    ion-icon {
-      font-size: 20px;
-    }
-
-    .action-count {
-      font-size: 13px;
+    &.expanded {
+      padding: 0 12px 12px 12px;
     }
   }
+}
 
-  .time-text {
-    font-size: 11px;
+// Ajustes para telas extremamente pequenas (320px)
+@media (max-width: 320px) {
+  .filter-header {
+    padding: 8px 10px;
+    min-height: 48px;
+  }
+
+  .filter-header-content {
+    gap: 6px;
+  }
+
+  .filter-input-icon {
+    font-size: 15px;
+  }
+
+  .filter-toggle-icon {
+    font-size: 16px;
+  }
+
+  .filter-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    min-width: 20px;
   }
 }
 
