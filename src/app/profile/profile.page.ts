@@ -1,5 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { ActionSheetController, Platform } from '@ionic/angular';
+import { ActionSheetController, Platform, AlertController, ToastController } from '@ionic/angular';
+
+interface FamilyMember {
+  id: number;
+  name: string;
+  role: 'leader' | 'member';
+  avatar: string;
+  email?: string;
+  isCurrentUser?: boolean;
+}
 
 @Component({
   selector: 'app-profile',
@@ -27,9 +36,55 @@ export class ProfilePage implements OnInit {
   selectedFiles: File[] = [];
   maxDate: Date = new Date();
 
+  // Family Management
+  maxFamilyMembers: number = 6;
+  familyAddress: string = 'R. Osório Ferreira - Subsetor Leste - 5 (L-5), Ribeirão Preto - SP, 14090-520, Brazil';
+  familyMembers: FamilyMember[] = [
+    {
+      id: 1,
+      name: 'Você',
+      role: 'leader',
+      avatar: this.userProfile.profileImage,
+      isCurrentUser: true
+    },
+    {
+      id: 2,
+      name: 'Giullio Gerolamo',
+      role: 'member',
+      avatar: 'https://via.placeholder.com/150/4CAF50/FFFFFF?text=GG'
+    },
+    {
+      id: 3,
+      name: 'Lukas Rosa',
+      role: 'member',
+      avatar: 'https://via.placeholder.com/150/2196F3/FFFFFF?text=LR'
+    },
+    {
+      id: 4,
+      name: 'Cauã Boeniares Shmith',
+      role: 'member',
+      avatar: 'https://via.placeholder.com/150/FF9800/FFFFFF?text=CBS'
+    },
+    {
+      id: 5,
+      name: 'Giovanni Enrico',
+      role: 'member',
+      avatar: 'https://via.placeholder.com/150/9C27B0/FFFFFF?text=GE'
+    },
+    {
+      id: 6,
+      name: 'botechi',
+      role: 'member',
+      avatar: 'https://via.placeholder.com/150/E91E63/FFFFFF?text=B'
+    }
+  ];
+  inviteLink: string = 'https://www.afteer.com/family/invite/abc123xyz';
+
   constructor(
     private actionSheetController: ActionSheetController,
-    private platform: Platform
+    private platform: Platform,
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {}
 
   ngOnInit() {
@@ -200,6 +255,146 @@ export class ProfilePage implements OnInit {
 
   deleteProfileImage() {
     this.userProfile.profileImage = 'https://via.placeholder.com/150/FFB6C1/FFFFFF?text=You';
+  }
+
+  // Family Management Methods
+  get usedSlots(): number {
+    return this.familyMembers.length;
+  }
+
+  get availableSlots(): number {
+    return this.maxFamilyMembers - this.usedSlots;
+  }
+
+  get isMaxMembers(): boolean {
+    return this.usedSlots >= this.maxFamilyMembers;
+  }
+
+  getMemberRoleLabel(member: FamilyMember): string {
+    return member.role === 'leader' ? 'Administrador da Família' : 'Membro da Família';
+  }
+
+  async viewMemberDetails(member: FamilyMember) {
+    const alert = await this.alertController.create({
+      header: member.name,
+      message: `
+        <p><strong>Função:</strong> ${this.getMemberRoleLabel(member)}</p>
+        ${member.email ? `<p><strong>E-mail:</strong> ${member.email}</p>` : ''}
+      `,
+      buttons: ['Fechar']
+    });
+    await alert.present();
+  }
+
+  async removeMember(member: FamilyMember) {
+    if (member.isCurrentUser) {
+      const alert = await this.alertController.create({
+        header: 'Ação não permitida',
+        message: 'Você não pode remover a si mesmo do plano.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    if (member.role === 'leader') {
+      const alert = await this.alertController.create({
+        header: 'Ação não permitida',
+        message: 'Você não pode remover o administrador do plano.',
+        buttons: ['OK']
+      });
+      await alert.present();
+      return;
+    }
+
+    const alert = await this.alertController.create({
+      header: 'Remover membro',
+      message: `Tem certeza que deseja remover ${member.name} do plano?`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Remover',
+          role: 'destructive',
+          handler: () => {
+            const index = this.familyMembers.findIndex(m => m.id === member.id);
+            if (index !== -1) {
+              this.familyMembers.splice(index, 1);
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async editAddress() {
+    const alert = await this.alertController.create({
+      header: 'Editar endereço',
+      inputs: [
+        {
+          name: 'address',
+          type: 'text',
+          value: this.familyAddress,
+          placeholder: 'Digite o endereço'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel'
+        },
+        {
+          text: 'Salvar',
+          handler: (data) => {
+            if (data.address) {
+              this.familyAddress = data.address;
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async copyInviteLink() {
+    try {
+      await navigator.clipboard.writeText(this.inviteLink);
+      const toast = await this.toastController.create({
+        message: 'Link copiado para a área de transferência!',
+        duration: 2000,
+        position: 'bottom',
+        color: 'success'
+      });
+      await toast.present();
+    } catch (err) {
+      console.error('Erro ao copiar link:', err);
+      const toast = await this.toastController.create({
+        message: 'Erro ao copiar link. Tente novamente.',
+        duration: 2000,
+        position: 'bottom',
+        color: 'danger'
+      });
+      await toast.present();
+    }
+  }
+
+  shareViaMessenger() {
+    const url = `https://www.messenger.com/share?link=${encodeURIComponent(this.inviteLink)}`;
+    window.open(url, '_blank');
+  }
+
+  shareViaWhatsApp() {
+    const url = `https://wa.me/?text=${encodeURIComponent(`Junte-se ao meu plano familiar: ${this.inviteLink}`)}`;
+    window.open(url, '_blank');
+  }
+
+  shareViaEmail() {
+    const subject = encodeURIComponent('Convite para o plano familiar');
+    const body = encodeURIComponent(`Olá,\n\nVocê foi convidado para fazer parte do meu plano familiar.\n\nLink de convite: ${this.inviteLink}`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
   }
 }
 

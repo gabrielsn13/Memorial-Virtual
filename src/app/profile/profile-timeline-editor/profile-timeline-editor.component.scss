@@ -2,7 +2,10 @@
 .timeline-editor-container {
   padding: 16px;
   max-width: 100%;
+  width: 100%;
   background: transparent;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 // ============================================
@@ -14,6 +17,10 @@
   padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .editor-content {
@@ -40,6 +47,9 @@
 .editor-main {
   flex: 1;
   min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .post-textarea {
@@ -103,12 +113,21 @@
   margin-top: 12px;
   padding-top: 12px;
   border-top: 1px solid #E5E5EA;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .toolbar-icons {
   display: flex;
   gap: 8px;
   align-items: center;
+  flex-wrap: wrap;
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .toolbar-icon-btn {
@@ -117,6 +136,8 @@
   margin: 0;
   width: 36px;
   height: 36px;
+  min-width: 36px;
+  flex-shrink: 0;
   --padding-start: 0;
   --padding-end: 0;
 
@@ -141,6 +162,11 @@
   font-weight: 600;
   font-size: 15px;
   margin: 0;
+  flex-shrink: 0;
+  min-width: fit-content;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
 
   &[disabled] {
     opacity: 0.5;
@@ -416,5 +442,107 @@
 
   .item-text p {
     font-size: 14px;
+  }
+}
+
+// Ajustes específicos para telas muito pequenas (mobile)
+@media (max-width: 480px) {
+  .timeline-editor-container {
+    padding: 8px;
+  }
+
+  .post-editor-card {
+    padding: 12px;
+  }
+
+  .editor-toolbar {
+    gap: 6px;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+
+  .toolbar-icons {
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    max-width: calc(100% - 80px); // Reserva espaço para o botão Post
+  }
+
+  .toolbar-icon-btn {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+
+    ion-icon {
+      font-size: 16px;
+    }
+  }
+
+  .post-button {
+    height: 32px;
+    font-size: 13px;
+    --padding-start: clamp(12px, 4vw, 16px);
+    --padding-end: clamp(12px, 4vw, 16px);
+    max-width: min(80px, calc(100vw - 32px - 8px)); // Considera padding do container e gap
+    min-width: 60px;
+  }
+}
+
+// Ajustes para telas extremamente pequenas (320px, 360px, 390px)
+@media (max-width: 390px) {
+  .editor-toolbar {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .toolbar-icons {
+    max-width: 100%;
+    width: 100%;
+    order: 1;
+    margin-bottom: 4px;
+  }
+
+  .post-button {
+    order: 2;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+// Ajustes para telas muito pequenas (320px)
+@media (max-width: 360px) {
+  .timeline-editor-container {
+    padding: 6px;
+  }
+
+  .post-editor-card {
+    padding: 10px;
+  }
+
+  .editor-toolbar {
+    gap: 6px;
+  }
+
+  .toolbar-icons {
+    gap: 3px;
+  }
+
+  .toolbar-icon-btn {
+    width: 30px;
+    height: 30px;
+    min-width: 30px;
+
+    ion-icon {
+      font-size: 15px;
+    }
+  }
+
+  .post-button {
+    height: 30px;
+    font-size: 12px;
+    --padding-start: 12px;
+    --padding-end: 12px;
   }
 }

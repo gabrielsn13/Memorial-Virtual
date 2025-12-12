@@ -143,10 +143,127 @@
         </div>
 
         <!-- Family Tab -->
-        <div class="tab-content" *ngIf="activeTab === 'family'">
-          <h3 class="section-title">Family</h3>
-          <p class="info-text">Manage family members and relationships.</p>
-          <!-- Implementar gerenciamento de família -->
+        <div class="tab-content family-tab" *ngIf="activeTab === 'family'">
+          <div class="family-management-container">
+            <!-- Left Column: Plan Info + Members List -->
+            <div class="family-left-column">
+              <!-- Address Section -->
+              <div class="family-address-section">
+                <div class="address-header">
+                  <h3 class="family-section-title">Seu endereço</h3>
+                  <ion-button 
+                    fill="clear" 
+                    size="small" 
+                    class="edit-address-btn"
+                    (click)="editAddress()">
+                    Editar
+                  </ion-button>
+                </div>
+                <p class="family-address-text">{{ familyAddress }}</p>
+              </div>
+
+              <!-- Members Section -->
+              <div class="family-members-section">
+                <div class="members-header">
+                  <h3 class="family-section-title">Membros da Família</h3>
+                  <div class="members-count">
+                    <ion-icon name="checkmark-circle" class="check-icon"></ion-icon>
+                    <span class="count-text">{{ usedSlots }}/{{ maxFamilyMembers }} contas usadas</span>
+                  </div>
+                </div>
+
+                <div class="members-list">
+                  <div 
+                    *ngFor="let member of familyMembers" 
+                    class="member-item"
+                    [class.current-user]="member.isCurrentUser">
+                    <div class="member-avatar">
+                      <img [src]="member.avatar" [alt]="member.name">
+                    </div>
+                    <div class="member-info">
+                      <div class="member-name">
+                        {{ member.name }}
+                        <span *ngIf="member.isCurrentUser" class="you-badge">Você</span>
+                      </div>
+                      <div class="member-role">{{ getMemberRoleLabel(member) }}</div>
+                    </div>
+                    <div class="member-actions">
+                      <ion-button 
+                        fill="clear" 
+                        size="small" 
+                        class="member-action-btn"
+                        (click)="viewMemberDetails(member)">
+                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                      </ion-button>
+                      <ion-button 
+                        *ngIf="!member.isCurrentUser && member.role !== 'leader'"
+                        fill="clear" 
+                        size="small" 
+                        class="member-action-btn remove-btn"
+                        (click)="removeMember(member)">
+                        <ion-icon name="close-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Invite Area -->
+            <div class="family-right-column">
+              <div class="invite-section">
+                <h3 class="family-section-title">Convidar uma pessoa</h3>
+                
+                <div *ngIf="isMaxMembers" class="max-members-message">
+                  <p>Você já tem o número máximo de membros na Família.</p>
+                </div>
+
+                <div class="invite-link-container">
+                  <div class="invite-link-input" [class.disabled]="isMaxMembers" (click)="!isMaxMembers && copyInviteLink()">
+                    <ion-icon name="link-outline" class="link-icon"></ion-icon>
+                    <input 
+                      type="text" 
+                      [value]="inviteLink" 
+                      readonly
+                      [disabled]="isMaxMembers"
+                      class="invite-link-field"
+                      (click)="!isMaxMembers && copyInviteLink()">
+                  </div>
+                </div>
+
+                <div class="share-buttons">
+                  <ion-button 
+                    fill="outline" 
+                    class="share-btn"
+                    [disabled]="isMaxMembers"
+                    (click)="shareViaMessenger()">
+                    <ion-icon name="logo-facebook" slot="start"></ion-icon>
+                    Messenger
+                  </ion-button>
+                  <ion-button 
+                    fill="outline" 
+                    class="share-btn"
+                    [disabled]="isMaxMembers"
+                    (click)="shareViaWhatsApp()">
+                    <ion-icon name="logo-whatsapp" slot="start"></ion-icon>
+                    WhatsApp
+                  </ion-button>
+                  <ion-button 
+                    fill="outline" 
+                    class="share-btn"
+                    [disabled]="isMaxMembers"
+                    (click)="shareViaEmail()">
+                    <ion-icon name="mail-outline" slot="start"></ion-icon>
+                    E-mail
+                  </ion-button>
+                </div>
+
+                <div class="help-link">
+                  <a href="#" class="help-link-text">Como adicionar membros do Family</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Events Tab -->
